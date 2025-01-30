@@ -1,7 +1,12 @@
 import 'package:appdev/pages/tabs.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
+void main() async {
+  await Supabase.initialize(
+        url: 'https://dzsweolrpmfwdjqvtnni.supabase.co',
+        anonKey:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6c3dlb2xycG1md2RqcXZ0bm5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg4MjkwODksImV4cCI6MjA1NDQwNTA4OX0.FmLD4bx5KCCEDIxBFBbqxOBiUT3KwOHcIT2iOwhvGgU');
   runApp(const MyApp());
 }
 
