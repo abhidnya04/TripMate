@@ -47,12 +47,12 @@ class _TabsScreenState extends State<TabsScreen> {
           },
           currentIndex: _selectedPageIndex,
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.explore), backgroundColor: const Color.fromARGB(255, 113, 174, 239), label: ''),
+            BottomNavigationBarItem(icon: Icon(Icons.explore), backgroundColor: const Color.fromARGB(255, 113, 174, 239), label: 'Explore'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.translate_outlined), label: 'j'),
-            BottomNavigationBarItem(icon: Icon(Icons.create), label: '9'),
+                icon: Icon(Icons.translate_outlined), label: 'Translate'),
+            BottomNavigationBarItem(icon: Icon(Icons.create), label: 'New Trip'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_bag), label: 'trips'),
+                icon: Icon(Icons.shopping_bag), label: 'Your trips'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.upload), label: 'DocVault'),
           ]),
