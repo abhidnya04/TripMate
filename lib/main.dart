@@ -1,3 +1,4 @@
+import 'package:appdev/tabs.dart';
 import 'package:appdev/trip.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Trip(),
+      home: TabsScreen(),
     );
   }
 }

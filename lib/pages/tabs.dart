@@ -33,7 +33,7 @@ class _TabsScreenState extends State<TabsScreen> {
       // appBar: AppBar(),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.white,
+          // backgroundColor: Colors.white,
           onTap: (int index) {
             selectPage(index);
           },
