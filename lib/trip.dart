@@ -23,25 +23,19 @@ class _TripState extends State<Trip> {
     articles = ArticleModel.getArticles();
   }
 
-  int _selectedIndex = 0;
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: const IconThemeData(size: 30),
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        actions: const [Icon(Icons.notifications_on)],
-        centerTitle: true,
-        title: const Text("Trip"),
-        leading: const Icon(Icons.person),
-      ),
+      // appBar: AppBar(
+      //   iconTheme: const IconThemeData(size: 30),
+      //   backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      //   actions: const [Icon(Icons.notifications_on)],
+      //   centerTitle: true,
+      //   title: const Text("Trip"),
+      //   leading: const Icon(Icons.person),
+      // ),
       body: ListView(
         children: [
           Column(
@@ -84,28 +78,6 @@ class _TripState extends State<Trip> {
           ),
         ],
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   currentIndex: _selectedIndex,
-      //   onTap: _onItemTapped,
-      //   items: const <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       label: 'Home',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.search),
-      //       label: 'Search',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.notifications),
-      //       label: 'Notifications',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.account_circle),
-      //       label: 'Profile',
-      //     ),
-      //   ],
-      // ),
     );
   }
 }

@@ -1,5 +1,4 @@
-import 'package:appdev/tabs.dart';
-import 'package:appdev/trip.dart';
+import 'package:appdev/pages/tabs.dart';
 import 'package:flutter/material.dart';
 
 void main() {
