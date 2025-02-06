@@ -60,6 +60,7 @@ class _UploadPageState extends State<UploadPage> {
                 // buttin
                 ElevatedButton(onPressed: pickImage, child: Text('Pick file')),
             
+                ElevatedButton(onPressed: uploadImage, child: Text('uploadfile')),
                 ElevatedButton(onPressed: uploadImage, child: Text('uploadfile'))
               ],
             ),
