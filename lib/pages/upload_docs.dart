@@ -38,7 +38,7 @@ class _UploadPageState extends State<UploadPage> {
 
     await Supabase.instance.client.storage
         // TO
-        .from('images')
+        .from('Documents')
         .upload(path, _imagefile!)
         .then((value) => ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('succesful'))));
@@ -47,20 +47,22 @@ class _UploadPageState extends State<UploadPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _imagefile != null
-                  ? Image.file(_imagefile!)
-                  : const Text('no file'),
-          
-              // buttin
-              ElevatedButton(onPressed: pickImage, child: Text('Pick file')),
-          
-              ElevatedButton(onPressed: uploadImage, child: Text('uploadfile'))
-            ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _imagefile != null
+                    ? Image.file(_imagefile!)
+                    : const Text('no file'),
+            
+                // buttin
+                ElevatedButton(onPressed: pickImage, child: Text('Pick file')),
+            
+                ElevatedButton(onPressed: uploadImage, child: Text('uploadfile'))
+              ],
+            ),
           ),
         ),
       ),
