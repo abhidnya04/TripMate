@@ -32,6 +32,24 @@ class _UploadPageState extends State<UploadPage> {
   Future uploadImage() async {
     if (_imagefile == null) return;
 
+    if (_fileNameTextEditingController.text.trim().isEmpty) {
+      //error
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: const Text('Invalid input'),
+                content: const Text('Please enter valid data'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('okay'))
+                ],
+              ));
+      return;
+    }
+
     final filename = _fileNameTextEditingController.text;
     // final filename = DateTime.now().millisecondsSinceEpoch.toString();
     final path = 'uploads2/$filename';

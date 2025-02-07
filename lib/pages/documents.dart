@@ -84,6 +84,8 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'imageViewScreen.dart';
+
 class MyDocuments extends StatefulWidget {
   const MyDocuments({super.key});
 
@@ -123,12 +125,26 @@ class _MyDocumentsState extends State<MyDocuments> {
   }
 
   void _navigateToUploadScreen() async {
-  final result = await Navigator.pushNamed(context, '/uploadDocs');
+    final result = await Navigator.pushNamed(context, '/uploadDocs');
 
-  if (result == true) {
-    _loadItems(); // ✅ Reload file list after upload
+    if (result == true) {
+      _loadItems(); // ✅ Reload file list after upload
+    }
   }
-}
+
+void _openImage(String fileName) async {
+    final imageUrl = Supabase.instance.client.storage
+        .from('Documents')
+        .getPublicUrl('uploads2/$fileName'); // ✅ Get file URL
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ImageViewerScreen(imageUrl: imageUrl),
+      ),
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +191,10 @@ class _MyDocumentsState extends State<MyDocuments> {
                             style: TextStyle(fontWeight: FontWeight.w600), // Slightly bold text
                           ),
                           leading: Icon(Icons.insert_drive_file, color: Colors.blueAccent), // File icon
-                          tileColor: Colors.white, // Tile background color
+                          tileColor: Colors.white, 
+                          onTap: () {
+                            _openImage(_loadedDocs[index].name);
+                          },// Tile background color
                         ),
       ),
     ),
