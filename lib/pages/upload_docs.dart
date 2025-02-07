@@ -43,7 +43,8 @@ class _UploadPageState extends State<UploadPage> {
         .then((value) => ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('succesful'))));
 
-    Navigator.popAndPushNamed(context, '/myDocs');
+    // Navigator.popAndPushNamed(context, '/myDocs');
+    Navigator.pop(context, true);
   }
 
   @override

@@ -122,6 +122,14 @@ class _MyDocumentsState extends State<MyDocuments> {
     });
   }
 
+  void _navigateToUploadScreen() async {
+  final result = await Navigator.pushNamed(context, '/uploadDocs');
+
+  if (result == true) {
+    _loadItems(); // ✅ Reload file list after upload
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,9 +137,7 @@ class _MyDocumentsState extends State<MyDocuments> {
         title: Text('Your Documents'),
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/uploadDocs');
-            },
+            onPressed: _navigateToUploadScreen,
             icon: Icon(Icons.add),
           )
         ],
