@@ -23,19 +23,21 @@ class _TripState extends State<Trip> {
     articles = ArticleModel.getArticles();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   iconTheme: const IconThemeData(size: 30),
-      //   backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      //   actions: const [Icon(Icons.notifications_on)],
-      //   centerTitle: true,
-      //   title: const Text("Trip"),
-      //   leading: const Icon(Icons.person),
-      // ),
+      appBar: AppBar(
+        iconTheme: const IconThemeData(size: 30),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        actions: const [Icon(Icons.notifications_on)],
+        centerTitle: true,
+        title: const Text("Trip"),
+        leading: GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/login');
+            },
+            child: const Icon(Icons.person)),
+      ),
       body: ListView(
         children: [
           Column(
