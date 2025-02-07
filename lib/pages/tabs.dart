@@ -46,8 +46,8 @@ class _TabsScreenState extends State<TabsScreen> {
             selectPage(index);
           },
           currentIndex: _selectedPageIndex,
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.explore), backgroundColor: const Color.fromARGB(255, 113, 174, 239), label: 'Explore'),
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.explore), backgroundColor: Color.fromARGB(255, 113, 174, 239), label: 'Explore'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.translate_outlined), label: 'Translate'),
             BottomNavigationBarItem(icon: Icon(Icons.create), label: 'New Trip'),

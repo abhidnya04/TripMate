@@ -1,3 +1,4 @@
+import 'package:appdev/pages/login.dart';
 import 'package:appdev/pages/tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -23,6 +24,11 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: TabsScreen(),
+        routes: {
+        '/login': (context) =>  const LoginPage(),
+        '/signup': (context) =>  const LoginPage(),
+
+      },
     );
   }
 }

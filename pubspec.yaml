@@ -71,6 +71,8 @@ flutter:
     - assets/maldives.jpg
     - assets/kyoto.jpg
     - assets/bali.jpg
+    - lib/images/google.png
+    - lib/images/TravelLuggage.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
