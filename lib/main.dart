@@ -1,5 +1,7 @@
+import 'package:appdev/pages/documents.dart';
 import 'package:appdev/pages/login.dart';
 import 'package:appdev/pages/tabs.dart';
+import 'package:appdev/pages/upload_docs.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -27,6 +29,8 @@ class MyApp extends StatelessWidget {
         routes: {
         '/login': (context) =>   LoginPage(),
         '/signup': (context) =>  LoginPage(),
+        '/uploadDocs': (context) =>  UploadPage(),
+        '/myDocs': (context) =>  MyDocuments(),
 
       },
     );

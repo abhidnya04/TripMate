@@ -1,6 +1,7 @@
 import 'package:appdev/pages/create_trip.dart';
+import 'package:appdev/pages/documents.dart';
 import 'package:appdev/pages/translate.dart';
-import 'package:appdev/pages/upload_docs.dart';
+// import 'package:appdev/pages/upload_docs.dart';
 import 'package:appdev/trip.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class _TabsScreenState extends State<TabsScreen> {
     } else if (_selectedPageIndex == 3) {
       activePage = ManageTrips();
     } else if (_selectedPageIndex == 4) {
-      activePage = UploadPage();
+      activePage = MyDocuments();
     }
 
     return Scaffold(
@@ -49,12 +50,12 @@ class _TabsScreenState extends State<TabsScreen> {
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.explore), backgroundColor: Color.fromARGB(255, 113, 174, 239), label: 'Explore'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.translate_outlined), label: 'Translate'),
-            BottomNavigationBarItem(icon: Icon(Icons.create), label: 'New Trip'),
+                icon: Icon(Icons.translate_outlined),backgroundColor: Color.fromARGB(255, 115, 155, 132) , label: 'Translate',),
+            BottomNavigationBarItem(icon: Icon(Icons.create),backgroundColor: Color.fromARGB(255, 113, 174, 239) ,  label: 'New Trip'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_bag), label: 'Your trips'),
+                icon: Icon(Icons.shopping_bag),backgroundColor: Color.fromARGB(255, 113, 174, 239) ,  label: 'Your trips'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.upload), label: 'DocVault'),
+                icon: Icon(Icons.upload), backgroundColor: Color.fromARGB(255, 113, 174, 239) , label: 'DocVault'),
           ]),
     );
   }
