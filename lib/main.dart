@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
       ),
       home: TabsScreen(),
         routes: {
-        '/login': (context) =>  const LoginPage(),
-        '/signup': (context) =>  const LoginPage(),
+        '/login': (context) =>   LoginPage(),
+        '/signup': (context) =>  LoginPage(),
 
       },
     );

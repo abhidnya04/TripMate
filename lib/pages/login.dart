@@ -8,16 +8,16 @@ import '../components/square_tile.dart';
 
 import 'register.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({super.key});
+class LoginPage extends StatefulWidget {
+  LoginPage({super.key});
 
   //text editing controllers
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _LoginPageState extends State<LoginPage> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
