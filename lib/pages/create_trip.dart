@@ -11,6 +11,15 @@ class _CreateTripState extends State<CreateTrip> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Travel Preferences',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 30,
+          ),
+          ),
+      ),
       body: Center(child: Text("CREATE")),
     );
   }
