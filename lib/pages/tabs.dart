@@ -29,7 +29,7 @@ class _TabsScreenState extends State<TabsScreen> {
     Widget activePage = Trip();
 
     if (_selectedPageIndex == 1) {
-      activePage = TranslatePage();
+      activePage = TranslationPage();
     } else if (_selectedPageIndex == 2) {
       activePage = CreateTrip();
     } else if (_selectedPageIndex == 3) {
