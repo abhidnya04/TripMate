@@ -69,30 +69,32 @@ class _UploadPageState extends State<UploadPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(42.0),
-        child: Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _imagefile != null
-                  ? Image.file(
-                      _imagefile!,
-                      fit: BoxFit.cover,
-                      height: 500,
-                    )
-                  : const Text('no file'),
-
-              // buttin
-
-              TextField(
-                controller: _fileNameTextEditingController,
-                decoration: InputDecoration(helperText: "Enter file name"),
-              ),
-              ElevatedButton(onPressed: pickImage, child: Text('Pick file')),
-
-              ElevatedButton(onPressed: uploadImage, child: Text('uploadfile')),
-            ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(42.0),
+          child: Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _imagefile != null
+                    ? Image.file(
+                        _imagefile!,
+                        fit: BoxFit.cover,
+                        height: 500,
+                      )
+                    : const Text('no file'),
+        
+                // buttin
+        
+                TextField(
+                  controller: _fileNameTextEditingController,
+                  decoration: InputDecoration(helperText: "Enter file name"),
+                ),
+                ElevatedButton(onPressed: pickImage, child: Text('Pick file')),
+        
+                ElevatedButton(onPressed: uploadImage, child: Text('uploadfile')),
+              ],
+            ),
           ),
         ),
       ),

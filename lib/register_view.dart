@@ -1,9 +1,9 @@
 /*
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:learn_registration/firebase_options.dart';
+import 'package:learn_registration/constants/routes.dart';
+import 'package:learn_registration/utilities/dialog.dart';
 
 class Registerview extends StatefulWidget {
   const Registerview({super.key});
@@ -37,14 +37,7 @@ class _RegisterviewState extends State<Registerview> {
       appBar: AppBar(
         title: const Text('Register'),
       ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-            ), 
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState){
-            case ConnectionState.done:
-              return Column(
+      body: Column(
             children:[ 
             TextField(
               decoration: const InputDecoration(
@@ -69,33 +62,43 @@ class _RegisterviewState extends State<Registerview> {
                 final email=_email.text;
                 final password=_password.text;
                 try{
-                  final userCredential=
                 await FirebaseAuth.instance.createUserWithEmailAndPassword(
                   email: email, 
                   password: password);
+                  final user = FirebaseAuth.instance.currentUser;
+                  await user?.sendEmailVerification();
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                        emailverification,
+                        (route)=>false,
+                        );
                 }
                 on FirebaseAuthException catch(e){
                   if(e.code=='invalid-email'){
-                    print("wrong email");
+                    await showerrorDialog(context, 'wrong email');
                   }
                   if(e.code=='weak-password'){
-                    print("improve your password");
+                    await showerrorDialog(context, 'weak password');
                   }
                   if(e.code=='email-already-in-use'){
-                    print("this email is already registered");
+                    await showerrorDialog(context, 'email is already registered');
                   }
-                  else{print(e.code);}
+                  else{
+                    await showerrorDialog(context, '${e.code}');
+                    }
+                }catch(e){
+                  await showerrorDialog(context, e.toString());
                 }
               },
               child: const Text('register'),
               ),
+              TextButton(
+                onPressed:(){
+                  Navigator.of(context).pushNamedAndRemoveUntil(loginroute, (route)=>false);
+                }, 
+                child: const Text("Already have a account ? login")
+                ),
             ],
-          );
-          default : 
-          return const Text(" Loading .......");
-        }  
-        },
-      ),
+          )
     );
   }
 }
