@@ -8,6 +8,7 @@ class CreateTrip extends StatefulWidget {
 }
 
 class _CreateTripState extends State<CreateTrip> {
+  String selectedBudget = ""; // To track the selected budget
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,11 +36,35 @@ class _CreateTripState extends State<CreateTrip> {
 
           // Using CustomTextField component
           //Trip name
-          const CustomTextField(label: "Name Trip", hintText: "Enter Trip Name"),
+          const CustomTextField(
+              label: "Name Trip", hintText: "Enter Trip Name"),
           const SizedBox(height: 15),
-          const CustomTextField(label: "Travel Destination", hintText: "Enter Destination"),
+          const CustomTextField(
+              label: "Travel Destination", hintText: "Enter Destination"),
           const SizedBox(height: 15),
-          const CustomTextField(label: "Duration", hintText: "Enter No. Of Days"),
+          const CustomTextField(
+              label: "Duration", hintText: "Enter No. Of Days"),
+
+          const SizedBox(height: 20),
+
+          // Budget Selection
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: Text(
+              "Select Budget",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ),
+          const SizedBox(height: 10),
+
+          BudgetSelection(
+            selectedBudget: selectedBudget,
+            onBudgetSelected: (budget) {
+              setState(() {
+                selectedBudget = budget;
+              });
+            },
+          ),
         ],
       ),
     );
@@ -51,7 +76,8 @@ class CustomTextField extends StatelessWidget {
   final String label;
   final String hintText;
 
-  const CustomTextField({super.key, required this.label, required this.hintText});
+  const CustomTextField(
+      {super.key, required this.label, required this.hintText});
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +89,8 @@ class CustomTextField extends StatelessWidget {
             textAlignVertical: TextAlignVertical.bottom,
             style: const TextStyle(fontSize: 20, color: Colors.black),
             decoration: InputDecoration(
-              contentPadding: const EdgeInsets.only(top: 35, left: 22, bottom: 12),
+              contentPadding:
+                  const EdgeInsets.only(top: 35, left: 22, bottom: 12),
               hintText: hintText,
               hintStyle: const TextStyle(color: Colors.black, fontSize: 20),
               filled: true,
@@ -100,10 +127,96 @@ class CustomTextField extends StatelessWidget {
   }
 }
 
+/// **Budget Selection Component**
+class BudgetSelection extends StatelessWidget {
+  final String selectedBudget;
+  final Function(String) onBudgetSelected;
 
+  const BudgetSelection({
+    super.key,
+    required this.selectedBudget,
+    required this.onBudgetSelected,
+  });
 
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          BudgetButton(
+            label: "Low",
+            imagePath: "lib/images/budget.png",
+            isSelected: selectedBudget == "Low",
+            onTap: () => onBudgetSelected("Low"),
+          ),
+          BudgetButton(
+            label: "Medium",
+            imagePath: "lib/images/budget.png",
+            isSelected: selectedBudget == "Medium",
+            onTap: () => onBudgetSelected("Medium"),
+          ),
+          BudgetButton(
+            label: "High",
+            imagePath: "lib/images/budget.png",
+            isSelected: selectedBudget == "High",
+            onTap: () => onBudgetSelected("High"),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
+/// **Reusable Budget Button Component**
+class BudgetButton extends StatelessWidget {
+  final String label;
+  final String imagePath;
+  final bool isSelected;
+  final VoidCallback onTap;
 
+  const BudgetButton({
+    super.key,
+    required this.label,
+    required this.imagePath,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+@override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Container(
+            width: 90, // Set a fixed width
+            height: 90, // Set a fixed height
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: isSelected ? Colors.blue : Colors.grey[300]!,
+                width: isSelected ? 2 : 1,
+              ),
+              borderRadius: BorderRadius.circular(15),
+            ),
+child: Image.asset(imagePath, fit: BoxFit.cover,),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: isSelected ? Colors.blue : Colors.black,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 
 
