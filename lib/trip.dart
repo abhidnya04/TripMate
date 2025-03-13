@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'components/articles_widget.dart';
 import 'components/saved_thumbnails.dart';
 import 'models/articles.dart';
@@ -22,6 +23,8 @@ class _TripState extends State<Trip> {
     categories = SavedModel.getCategories();
     articles = ArticleModel.getArticles();
   }
+  
+    final supabase = Supabase.instance.client;
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +36,20 @@ class _TripState extends State<Trip> {
         centerTitle: true,
         title: const Text("Trip"),
         leading: GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, '/login');
+            onTap: () async {
+              try {
+                await supabase.auth.signOut();  // Sign out user
+                if (mounted) {
+                  Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false); // Redirect to Login Page
+                }
+                } catch (error) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Logout failed: $error')),
+                );
+              }
+
             },
-            child: const Icon(Icons.person)),
+            child: const Icon(Icons.power_settings_new)),
       ),
       body: ListView(
         children: [

@@ -1,5 +1,8 @@
+import 'package:appdev/components/forgetpassdialog.dart';
 import 'package:appdev/pages/documents.dart';
 import 'package:appdev/pages/login.dart';
+import 'package:appdev/pages/register.dart';
+import 'package:appdev/pages/reset_password.dart';
 import 'package:appdev/pages/tabs.dart';
 import 'package:appdev/pages/upload_docs.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +16,27 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+@override
+void initState() {
+  super.initState();
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    Future.delayed(Duration.zero, () {
+      if (mounted) {
+        configureDeepLink(context);
+      }
+    });
+  });
+}
+
   @override
   Widget build(BuildContext context) {
     
@@ -27,12 +47,14 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 255, 255, 255)),
         useMaterial3: true,
       ),
-      home: TabsScreen(),
+      initialRoute: '/login',
         routes: {
+        '/tabs': (context) =>   TabsScreen(),
         '/login': (context) =>   LoginPage(),
-        '/signup': (context) =>  LoginPage(),
+        '/signup': (context) =>  RegisterPage(),
         '/uploadDocs': (context) =>  UploadPage(),
         '/myDocs': (context) =>  MyDocuments(),
+        '/updatepasswordpage': (context) =>  UpdatePasswordPage()
 
       },
     );
