@@ -31,7 +31,19 @@ class _LoginPageState extends State<LoginPage> {
       }
     });
   });
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    checkUserSession(); // Check session at startup
+  });
   }
+
+  Future<void> checkUserSession() async {
+  final session = supabase.auth.currentSession;
+  if (session != null) {
+    if (mounted) {
+      Navigator.of(context).pushReplacementNamed('/tabs'); // Navigate to home
+    }
+  }
+}
 
   @override
   void dispose() {
