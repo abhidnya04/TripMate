@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../components/selection_button.dart';
 
-
 class PeopleSelection extends StatelessWidget {
   final String selectedPeople;
   final Function(String) onPeopleSelected;
@@ -19,45 +18,47 @@ class PeopleSelection extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: Column(
         children: [
-          SizedBox(
-            height: 80,
-
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                
-                children: [
-                  SelectionButton(
-                    label: "Single",
-                    imagePath: "lib/images/Couple.png",
-                    isSelected: selectedPeople == "Single",
-                    onTap: () => onPeopleSelected("Single"),
-                  ),
-                  const SizedBox(width: 20),
-                  SelectionButton(
-                    label: "Couple",
-                    imagePath: "lib/images/Couple.png",
-                    isSelected: selectedPeople == "Couple",
-                    onTap: () => onPeopleSelected("Couple"),
-                  ),
-                  SelectionButton(
-                    label: "Friend",
-                    imagePath: "lib/images/Couple.png",
-                    isSelected: selectedPeople == "Friend",
-                    onTap: () => onPeopleSelected("Friend"),
-                  ),
-                  SelectionButton(
-                    label: "Family",
-                    imagePath: "lib/images/Couple.png",
-                    isSelected: selectedPeople == "Family",
-                    onTap: () => onPeopleSelected("Family"),
-                  ),
-                ],
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Distributes buttons evenly
+            children: [
+              Expanded(
+                child: SelectionButton(
+                  label: "Single",
+                  imagePath: "lib/images/Couple.png",
+                  isSelected: selectedPeople == "Single",
+                  onTap: () => onPeopleSelected("Single"),
+                ),
               ),
-            ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: SelectionButton(
+                  label: "Couple",
+                  imagePath: "lib/images/Couple.png",
+                  isSelected: selectedPeople == "Couple",
+                  onTap: () => onPeopleSelected("Couple"),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: SelectionButton(
+                  label: "Friend",
+                  imagePath: "lib/images/Couple.png",
+                  isSelected: selectedPeople == "Friend",
+                  onTap: () => onPeopleSelected("Friend"),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: SelectionButton(
+                  label: "Family",
+                  imagePath: "lib/images/Couple.png",
+                  isSelected: selectedPeople == "Family",
+                  onTap: () => onPeopleSelected("Family"),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 10),
-         
         ],
       ),
     );
