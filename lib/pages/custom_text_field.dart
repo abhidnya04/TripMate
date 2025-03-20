@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   final String label;
   final String hintText;
+  final TextEditingController controller;
+
 
   const CustomTextField(
-      {super.key, required this.label, required this.hintText});
+      {super.key, required this.label, required this.hintText, required this.controller,});
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +16,7 @@ class CustomTextField extends StatelessWidget {
       child: Stack(
         children: [
           TextField(
+             controller: controller, // Added controller
             textAlignVertical: TextAlignVertical.bottom,
             style: const TextStyle(fontSize: 20, color: Colors.black),
             decoration: InputDecoration(
