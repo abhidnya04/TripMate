@@ -1,3 +1,4 @@
+import 'package:appdev/components/logoutalert.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'components/articles_widget.dart';
@@ -36,19 +37,12 @@ class _TripState extends State<Trip> {
         centerTitle: true,
         title: const Text("Trip"),
         leading: GestureDetector(
-            onTap: () async {
-              try {
-                await supabase.auth.signOut();  // Sign out user
-                if (mounted) {
-                  Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false); // Redirect to Login Page
-                }
-                } catch (error) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Logout failed: $error')),
-                );
-              }
-
-            },
+            onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => logotalert(),
+                        );
+                      },
             child: const Icon(Icons.power_settings_new)),
       ),
       body: ListView(
