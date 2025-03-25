@@ -28,46 +28,54 @@ class ArticlesWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             separatorBuilder: (context, index) => const SizedBox(width: 20),
             itemBuilder: (context, index) {
-              return Container(
-                width: 300,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     color: Colors.grey.withOpacity(0.3),
-                  //     blurRadius: 8,
-                  //     offset: const Offset(0, 4),
-                  //   ),
-                  // ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(16),
-                        topRight: Radius.circular(16),
-                      ),
-                      child: SizedBox(
-                        height: 150,
-                        width: double.infinity,
-                        child: articles[index].thumbnail,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        articles[index].title,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => articles[index].route),
+  );
+                },
+                child: Container(
+                  width: 300,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     color: Colors.grey.withOpacity(0.3),
+                    //     blurRadius: 8,
+                    //     offset: const Offset(0, 4),
+                    //   ),
+                    // ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(16),
+                          topRight: Radius.circular(16),
                         ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                        child: SizedBox(
+                          height: 150,
+                          width: double.infinity,
+                          child: articles[index].thumbnail,
+                        ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          articles[index].title,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
