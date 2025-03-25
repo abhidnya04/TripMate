@@ -1,6 +1,7 @@
 import 'package:appdev/pages/create_trip.dart';
 import 'package:appdev/pages/documents.dart';
 import 'package:appdev/pages/translate.dart';
+import 'package:appdev/pages/your_trips.dart';
 // import 'package:appdev/pages/upload_docs.dart';
 import 'package:appdev/trip.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,7 +34,7 @@ class _TabsScreenState extends State<TabsScreen> {
     } else if (_selectedPageIndex == 2) {
       activePage = CreateTrip();
     } else if (_selectedPageIndex == 3) {
-      activePage = ManageTrips();
+      activePage = YourTripsPage();
     } else if (_selectedPageIndex == 4) {
       activePage = MyDocuments();
     }
