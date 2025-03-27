@@ -132,7 +132,7 @@ class _MyDocumentsState extends State<MyDocuments> {
     }
   }
 
-void _openImage(String fileName) async {
+  void _openImage(String fileName) async {
     final imageUrl = Supabase.instance.client.storage
         .from('Documents')
         .getPublicUrl('uploads2/$fileName'); // ✅ Get file URL
@@ -145,61 +145,82 @@ void _openImage(String fileName) async {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Your Documents'),
-        actions: [
-          IconButton(
-            onPressed: _navigateToUploadScreen,
-            icon: Icon(Icons.add),
-          )
+      floatingActionButton: ElevatedButton.icon(onPressed: (){
+
+      }, label: const Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.upload),
+          Text('Upload'),
         ],
       ),
-      body: _isLoading
-          ? Center(child: CircularProgressIndicator())
-          : _loadedDocs.isEmpty
-              ? Center(child: Text('No items added yet'))
-              :ListView.builder(
-                  itemCount: _loadedDocs.length,
-                  itemBuilder: (context, index) => Dismissible(
-                    key: ValueKey(_loadedDocs[index].id),
-                    onDismissed: (direction) {
-                      removeItem(_loadedDocs[index]);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
-                      child: Container(
-                        height: 70,
-                        decoration: BoxDecoration(
-                          color: Colors.white, // Background color
-                          borderRadius: BorderRadius.circular(12), // Rounded corners
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1), // Shadow color
-                              blurRadius: 8, // Softness of shadow
-                              spreadRadius: 2, // How far the shadow spreads
-                              offset: Offset(0, 4), // Vertical shadow direction
-                            ),
-                          ],
-                        ),
-                        child: ListTile(
-                          title: Text(
-                            _loadedDocs[index].name,
-                            style: TextStyle(fontWeight: FontWeight.w600), // Slightly bold text
-                          ),
-                          leading: Icon(Icons.insert_drive_file, color: Colors.blueAccent), // File icon
-                          tileColor: Colors.white, 
-                          onTap: () {
-                            _openImage(_loadedDocs[index].name);
-                          },// Tile background color
-                        ),
-      ),
+      style: ElevatedButton.styleFrom(
+      // backgroundColor: Colors.blueAccent,
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),
-  ),
-)
+      ),
+        appBar: AppBar(
+          title: Text('Your Documents'),
+          actions: [
+            IconButton(
+              onPressed: _navigateToUploadScreen,
+              icon: Icon(Icons.add),
+            )
+          ],
+        ),
+        body: _isLoading
+            ? Center(child: CircularProgressIndicator())
+            : _loadedDocs.isEmpty
+                ? Center(child: Text('No items added yet'))
+                : ListView.builder(
+                    itemCount: _loadedDocs.length,
+                    itemBuilder: (context, index) => Dismissible(
+                      key: ValueKey(_loadedDocs[index].id),
+                      onDismissed: (direction) {
+                        removeItem(_loadedDocs[index]);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 6.0),
+                        child: Container(
+                          height: 70,
+                          decoration: BoxDecoration(
+                            color: Colors.white, // Background color
+                            borderRadius:
+                                BorderRadius.circular(12), // Rounded corners
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black
+                                    .withOpacity(0.1), // Shadow color
+                                blurRadius: 8, // Softness of shadow
+                                spreadRadius: 2, // How far the shadow spreads
+                                offset:
+                                    Offset(0, 4), // Vertical shadow direction
+                              ),
+                            ],
+                          ),
+                          child: ListTile(
+                            title: Text(
+                              _loadedDocs[index].name,
+                              style: TextStyle(
+                                  fontWeight:
+                                      FontWeight.w600), // Slightly bold text
+                            ),
+                            leading: Icon(Icons.insert_drive_file,
+                                color: Colors.blueAccent), // File icon
+                            tileColor: Colors.white,
+                            onTap: () {
+                              _openImage(_loadedDocs[index].name);
+                            }, // Tile background color
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
     );
   }
 }
