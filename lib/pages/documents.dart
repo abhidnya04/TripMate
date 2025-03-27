@@ -104,25 +104,58 @@ class _MyDocumentsState extends State<MyDocuments> {
   }
 
   Future<void> _loadItems() async {
-    try {
-      final List<FileObject> docs = await Supabase.instance.client.storage
-          .from('Documents')
-          .list(path: 'uploads2');
-
-      setState(() {
-        _loadedDocs = docs;
-        _isLoading = false;
-      });
-    } catch (e) {
-      print("Error loading documents: $e");
-    }
+  final userId = Supabase.instance.client.auth.currentUser?.id;
+  if (userId == null) {
+    print("User not logged in");
+    return;
   }
 
-  void removeItem(FileObject item) {
+  try {
+    final List<FileObject> docs = await Supabase.instance.client.storage
+        .from('privatedoc')
+        .list(path: userId); // ✅ List only the user's files
+
     setState(() {
-      _loadedDocs.remove(item);
+      _loadedDocs = docs;
+      _isLoading = false;
     });
+  } catch (e) {
+    print("Error loading documents: $e");
   }
+}
+
+
+void removeItem(FileObject item) async {
+  final user = Supabase.instance.client.auth.currentUser;
+
+  if (user == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('User not authenticated.')),
+    );
+    return;
+  }
+
+  final filePath = '${user.id}/${item.name}'; // Ensure correct file path
+
+  try {
+    await Supabase.instance.client.storage
+        .from('privatedoc')
+        .remove([filePath]); // 🗑 Delete file from storage
+
+    setState(() {
+      _loadedDocs.remove(item); // ✅ Remove from local list
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('File deleted successfully.')),
+    );
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error deleting file: $e')),
+    );
+  }
+}
+
 
   void _navigateToUploadScreen() async {
     final result = await Navigator.pushNamed(context, '/uploadDocs');
@@ -132,18 +165,25 @@ class _MyDocumentsState extends State<MyDocuments> {
     }
   }
 
-  void _openImage(String fileName) async {
-    final imageUrl = Supabase.instance.client.storage
-        .from('Documents')
-        .getPublicUrl('uploads2/$fileName'); // ✅ Get file URL
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ImageViewerScreen(imageUrl: imageUrl),
-      ),
-    );
+void _openImage(String fileName) async {
+  final userId = Supabase.instance.client.auth.currentUser?.id;
+  if (userId == null) {
+    print("User not logged in");
+    return;
   }
+
+  final imageUrl = await Supabase.instance.client.storage
+      .from('privatedoc')
+      .createSignedUrl('$userId/$fileName', 60); // ✅ Secure access with signed URL
+
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => ImageViewerScreen(imageUrl: imageUrl),
+    ),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -157,58 +197,30 @@ class _MyDocumentsState extends State<MyDocuments> {
           Text('Upload'),
         ],
       ),
-      style: ElevatedButton.styleFrom(
-      // backgroundColor: Colors.blueAccent,
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-    ),
-      ),
-        appBar: AppBar(
-          title: Text('Your Documents'),
-          actions: [
-            IconButton(
-              onPressed: _navigateToUploadScreen,
-              icon: Icon(Icons.add),
-            )
-          ],
-        ),
-        body: _isLoading
-            ? Center(child: CircularProgressIndicator())
-            : _loadedDocs.isEmpty
-                ? Center(child: Text('No items added yet'))
-                : ListView.builder(
-                    itemCount: _loadedDocs.length,
-                    itemBuilder: (context, index) => Dismissible(
-                      key: ValueKey(_loadedDocs[index].id),
-                      onDismissed: (direction) {
-                        removeItem(_loadedDocs[index]);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 6.0),
-                        child: Container(
-                          height: 70,
-                          decoration: BoxDecoration(
-                            color: Colors.white, // Background color
-                            borderRadius:
-                                BorderRadius.circular(12), // Rounded corners
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black
-                                    .withOpacity(0.1), // Shadow color
-                                blurRadius: 8, // Softness of shadow
-                                spreadRadius: 2, // How far the shadow spreads
-                                offset:
-                                    Offset(0, 4), // Vertical shadow direction
-                              ),
-                            ],
-                          ),
-                          child: ListTile(
-                            title: Text(
-                              _loadedDocs[index].name,
-                              style: TextStyle(
-                                  fontWeight:
-                                      FontWeight.w600), // Slightly bold text
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : _loadedDocs.isEmpty
+              ? Center(child: Text('No items added yet'))
+              :ListView.builder(
+                  itemCount: _loadedDocs.length,
+                  itemBuilder: (context, index) => Dismissible(
+                    key: ValueKey(_loadedDocs[index].id),
+                    //onDismissed: (direction) {
+                      //removeItem(_loadedDocs[index]);
+                    //},
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
+                      child: Container(
+                        height: 70,
+                        decoration: BoxDecoration(
+                          color: Colors.white, // Background color
+                          borderRadius: BorderRadius.circular(12), // Rounded corners
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1), // Shadow color
+                              blurRadius: 8, // Softness of shadow
+                              spreadRadius: 2, // How far the shadow spreads
+                              offset: Offset(0, 4), // Vertical shadow direction
                             ),
                             leading: Icon(Icons.insert_drive_file,
                                 color: Colors.blueAccent), // File icon
