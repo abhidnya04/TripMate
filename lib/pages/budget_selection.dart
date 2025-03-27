@@ -23,19 +23,19 @@ class BudgetSelection extends StatelessWidget {
           children: [
             BudgetButton(
               label: "Low",
-              imagePath: "lib/images/budget.png",
+              imagePath: "lib/images/low.png",
               isSelected: selectedBudget == "Low",
               onTap: () => onBudgetSelected("Low"),
             ),
             BudgetButton(
               label: "Medium",
-              imagePath: "lib/images/budget.png",
+              imagePath: "lib/images/med.png",
               isSelected: selectedBudget == "Medium",
               onTap: () => onBudgetSelected("Medium"),
             ),
             BudgetButton(
               label: "High",
-              imagePath: "lib/images/budget.png",
+              imagePath: "lib/images/high.png",
               isSelected: selectedBudget == "High",
               onTap: () => onBudgetSelected("High"),
             ),
