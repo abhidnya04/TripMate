@@ -42,11 +42,39 @@ class _CreateTripState extends State<CreateTrip> {
     }
 
     // Show loading dialog
+    // showDialog(
+    //   context: context,
+    //   barrierDismissible: false,
+    //   builder: (context) => const Center(child: CircularProgressIndicator()),
+    // );
+
     showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
-    );
+      
+  context: context,
+  barrierDismissible: false,
+  builder: (context) => Dialog(
+    backgroundColor: Colors.transparent,
+
+    child: Column(
+        mainAxisSize: MainAxisSize.min,
+        
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              // color: Colors.blue
+            ),
+            child: Image.asset(
+              'assets/bus_loading.gif',
+              height: 120,
+              width: 120,
+            ),
+          ),
+
+        ],
+      ),
+    ),
+);
+
 
     try {
       GeminiService geminiService = GeminiService();

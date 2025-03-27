@@ -23,7 +23,7 @@ class CustomTextField extends StatelessWidget {
               contentPadding:
                   const EdgeInsets.only(top: 35, left: 22, bottom: 12),
               hintText: hintText,
-              hintStyle: const TextStyle(color: Colors.black, fontSize: 20),
+              hintStyle: const TextStyle(color: Colors.grey, fontSize: 20),
               filled: true,
               fillColor: Colors.white,
               border: OutlineInputBorder(
@@ -48,7 +48,7 @@ class CustomTextField extends StatelessWidget {
               color: Colors.white,
               child: Text(
                 label,
-                style: const TextStyle(color: Colors.grey, fontSize: 14),
+                style: const TextStyle(color: Colors.black87, fontSize: 16),
               ),
             ),
           ),

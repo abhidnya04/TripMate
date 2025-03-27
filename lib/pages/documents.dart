@@ -185,17 +185,16 @@ void _openImage(String fileName) async {
 }
 
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Your Documents'),
-        actions: [
-          IconButton(
-            onPressed: _navigateToUploadScreen,
-            icon: Icon(Icons.add),
-          )
+      floatingActionButton: ElevatedButton.icon(onPressed: (){
+
+      }, label: const Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.upload),
+          Text('Upload'),
         ],
       ),
       body: _isLoading
@@ -223,23 +222,17 @@ void _openImage(String fileName) async {
                               spreadRadius: 2, // How far the shadow spreads
                               offset: Offset(0, 4), // Vertical shadow direction
                             ),
-                          ],
-                        ),
-                        child: ListTile(
-                          title: Text(
-                            _loadedDocs[index].name,
-                            style: TextStyle(fontWeight: FontWeight.w600), // Slightly bold text
+                            leading: Icon(Icons.insert_drive_file,
+                                color: Colors.blueAccent), // File icon
+                            tileColor: Colors.white,
+                            onTap: () {
+                              _openImage(_loadedDocs[index].name);
+                            }, // Tile background color
                           ),
-                          leading: Icon(Icons.insert_drive_file, color: Colors.blueAccent), // File icon
-                          tileColor: Colors.white, 
-                          onTap: () {
-                            _openImage(_loadedDocs[index].name);
-                          },// Tile background color
                         ),
-      ),
-    ),
-  ),
-)
+                      ),
+                    ),
+                  )
     );
   }
 }
