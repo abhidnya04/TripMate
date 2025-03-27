@@ -92,6 +92,7 @@ flutter:
     - lib/images/low.png
     - lib/images/med.png
     - lib/images/high.png
+    - assets/bus_loading.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
