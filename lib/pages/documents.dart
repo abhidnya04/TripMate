@@ -104,25 +104,58 @@ class _MyDocumentsState extends State<MyDocuments> {
   }
 
   Future<void> _loadItems() async {
-    try {
-      final List<FileObject> docs = await Supabase.instance.client.storage
-          .from('Documents')
-          .list(path: 'uploads2');
-
-      setState(() {
-        _loadedDocs = docs;
-        _isLoading = false;
-      });
-    } catch (e) {
-      print("Error loading documents: $e");
-    }
+  final userId = Supabase.instance.client.auth.currentUser?.id;
+  if (userId == null) {
+    print("User not logged in");
+    return;
   }
 
-  void removeItem(FileObject item) {
+  try {
+    final List<FileObject> docs = await Supabase.instance.client.storage
+        .from('privatedoc')
+        .list(path: userId); // ✅ List only the user's files
+
     setState(() {
-      _loadedDocs.remove(item);
+      _loadedDocs = docs;
+      _isLoading = false;
     });
+  } catch (e) {
+    print("Error loading documents: $e");
   }
+}
+
+
+void removeItem(FileObject item) async {
+  final user = Supabase.instance.client.auth.currentUser;
+
+  if (user == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('User not authenticated.')),
+    );
+    return;
+  }
+
+  final filePath = '${user.id}/${item.name}'; // Ensure correct file path
+
+  try {
+    await Supabase.instance.client.storage
+        .from('privatedoc')
+        .remove([filePath]); // 🗑 Delete file from storage
+
+    setState(() {
+      _loadedDocs.remove(item); // ✅ Remove from local list
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('File deleted successfully.')),
+    );
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error deleting file: $e')),
+    );
+  }
+}
+
 
   void _navigateToUploadScreen() async {
     final result = await Navigator.pushNamed(context, '/uploadDocs');
@@ -133,17 +166,24 @@ class _MyDocumentsState extends State<MyDocuments> {
   }
 
 void _openImage(String fileName) async {
-    final imageUrl = Supabase.instance.client.storage
-        .from('Documents')
-        .getPublicUrl('uploads2/$fileName'); // ✅ Get file URL
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ImageViewerScreen(imageUrl: imageUrl),
-      ),
-    );
+  final userId = Supabase.instance.client.auth.currentUser?.id;
+  if (userId == null) {
+    print("User not logged in");
+    return;
   }
+
+  final imageUrl = await Supabase.instance.client.storage
+      .from('privatedoc')
+      .createSignedUrl('$userId/$fileName', 60); // ✅ Secure access with signed URL
+
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => ImageViewerScreen(imageUrl: imageUrl),
+    ),
+  );
+}
+
 
 
   @override
@@ -166,9 +206,9 @@ void _openImage(String fileName) async {
                   itemCount: _loadedDocs.length,
                   itemBuilder: (context, index) => Dismissible(
                     key: ValueKey(_loadedDocs[index].id),
-                    onDismissed: (direction) {
-                      removeItem(_loadedDocs[index]);
-                    },
+                    //onDismissed: (direction) {
+                      //removeItem(_loadedDocs[index]);
+                    //},
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
                       child: Container(
