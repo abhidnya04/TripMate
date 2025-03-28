@@ -79,7 +79,7 @@ class _UploadPageState extends State<UploadPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       appBar: AppBar(title: const Text('Upload Document')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),

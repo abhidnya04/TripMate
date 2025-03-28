@@ -113,8 +113,19 @@ class _MyDocumentsState extends State<MyDocuments> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'My Uploaded documents',
+            style: TextStyle(fontWeight: FontWeight.w500),
+          ),
+        ),
         floatingActionButton: ElevatedButton.icon(
-            onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Color(0xff00296b)
+          ),
+            onPressed: () {
+              Navigator.pushNamed(context, '/uploadDocs');
+            },
             label: const Row(
               mainAxisSize: MainAxisSize.min,
               children: [

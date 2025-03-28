@@ -87,6 +87,10 @@ flutter:
     - assets/kyoto.jpg
     - assets/bali.jpg
     - assets/couple.png
+    - assets/icons/coin.png
+    - assets/money.png
+    - assets/bag.png
+    - assets/dollar.png
     - assets/fam.png
     - assets/frnd.png
     - assets/solo.png
