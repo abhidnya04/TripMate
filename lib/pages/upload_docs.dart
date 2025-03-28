@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -12,94 +11,102 @@ class UploadPage extends StatefulWidget {
 }
 
 class _UploadPageState extends State<UploadPage> {
-  @override
-  File? _imagefile;
-  final TextEditingController _fileNameTextEditingController =
-      TextEditingController();
+  File? _imageFile;
+  final TextEditingController _fileNameController = TextEditingController();
+  final SupabaseClient _supabase = Supabase.instance.client;
 
-  Future pickImage() async {
+  Future<void> pickImage() async {
     final ImagePicker picker = ImagePicker();
-
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
     if (image != null) {
       setState(() {
-        _imagefile = File(image.path);
+        _imageFile = File(image.path);
       });
     }
   }
 
-  Future uploadImage() async {
-    if (_imagefile == null) return;
+  Future<void> uploadImage() async {
+    if (_imageFile == null) return;
 
-    if (_fileNameTextEditingController.text.trim().isEmpty) {
-      //error
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: const Text('Invalid input'),
-                content: const Text('Please enter valid data'),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('okay'))
-                ],
-              ));
+    final user = _supabase.auth.currentUser;
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('User not authenticated. Please log in.')),
+      );
       return;
     }
 
-    final filename = _fileNameTextEditingController.text;
-    // final filename = DateTime.now().millisecondsSinceEpoch.toString();
-    final path = 'uploads2/$filename';
+    final userId = user.id;
+    final fileName = _fileNameController.text.trim();
 
-    await Supabase.instance.client.storage
-        // TO
-        .from('Documents')
-        .upload(path, _imagefile!)
-        .then((value) => ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('succesful'))));
+    if (fileName.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Invalid Input'),
+          content: const Text('Please enter a valid file name.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
 
-    // Navigator.popAndPushNamed(context, '/myDocs');
-    Navigator.pop(context, true);
+    final filePath = '$userId/$fileName.jpg'; // Store under user ID folder
+
+    try {
+      await _supabase.storage
+          .from('privatedoc')
+          .upload(filePath, _imageFile!);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Upload successful!')),
+      );
+
+      Navigator.pop(context, true); // Reload list after upload
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Upload failed: $e')),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(title: const Text('Upload Document')),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(42.0),
-          child: Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _imagefile != null
-                    ? Image.file(
-                        _imagefile!,
-                        fit: BoxFit.cover,
-                        height: 500,
-                      )
-                    : const Text('no file'),
-        
-                // buttin
-        
-                TextField(
-                  controller: _fileNameTextEditingController,
-                  decoration: InputDecoration(helperText: "Enter file name"),
-                ),
-                ElevatedButton(onPressed: pickImage, child: Text('Pick file')),
-        
-                ElevatedButton(onPressed: uploadImage, child: Text('uploadfile')),
-              ],
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            _imageFile != null
+                ? Image.file(_imageFile!, fit: BoxFit.cover, height: 300)
+                : const Text('No file selected'),
+            const SizedBox(height: 20),
+            TextField(
+              controller: _fileNameController,
+              decoration: const InputDecoration(labelText: "Enter file name"),
             ),
-          ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: pickImage,
+              child: const Text('Pick File'),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: uploadImage,
+              child: const Text('Upload File'),
+            ),
+          ],
         ),
       ),
     );
   }
 }
-
 

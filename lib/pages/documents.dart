@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -22,10 +21,16 @@ class _MyDocumentsState extends State<MyDocuments> {
   }
 
   Future<void> _loadItems() async {
+    final userId = Supabase.instance.client.auth.currentUser?.id;
+    if (userId == null) {
+      print("User not logged in");
+      return;
+    }
+
     try {
       final List<FileObject> docs = await Supabase.instance.client.storage
-          .from('Documents')
-          .list(path: 'uploads2');
+          .from('privatedoc')
+          .list(path: userId); // ✅ List only the user's files
 
       setState(() {
         _loadedDocs = docs;
@@ -36,10 +41,35 @@ class _MyDocumentsState extends State<MyDocuments> {
     }
   }
 
-  void removeItem(FileObject item) {
-    setState(() {
-      _loadedDocs.remove(item);
-    });
+  void removeItem(FileObject item) async {
+    final user = Supabase.instance.client.auth.currentUser;
+
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('User not authenticated.')),
+      );
+      return;
+    }
+
+    final filePath = '${user.id}/${item.name}'; // Ensure correct file path
+
+    try {
+      await Supabase.instance.client.storage
+          .from('privatedoc')
+          .remove([filePath]); // 🗑 Delete file from storage
+
+      setState(() {
+        _loadedDocs.remove(item); // ✅ Remove from local list
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('File deleted successfully.')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error deleting file: $e')),
+      );
+    }
   }
 
   void _navigateToUploadScreen() async {
@@ -48,19 +78,6 @@ class _MyDocumentsState extends State<MyDocuments> {
     if (result == true) {
       _loadItems(); // ✅ Reload file list after upload
     }
-  }
-
-  void _openImage(String fileName) async {
-    final imageUrl = Supabase.instance.client.storage
-        .from('Documents')
-        .getPublicUrl('uploads2/$fileName'); // ✅ Get file URL
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ImageViewerScreen(imageUrl: imageUrl),
-      ),
-    );
   }
 
   void _shareDocument(String docName) {
@@ -73,37 +90,38 @@ class _MyDocumentsState extends State<MyDocuments> {
     print("Deleting: $docName");
   }
 
+  void _openImage(String fileName) async {
+    final userId = Supabase.instance.client.auth.currentUser?.id;
+    if (userId == null) {
+      print("User not logged in");
+      return;
+    }
+
+    final imageUrl = await Supabase.instance.client.storage
+        .from('privatedoc')
+        .createSignedUrl(
+            '$userId/$fileName', 60); // ✅ Secure access with signed URL
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ImageViewerScreen(imageUrl: imageUrl),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: ElevatedButton.icon(
-          onPressed: () {},
-          label: const Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.upload),
-              Text('  Upload'),
-            ],
-          ),
-          style: ElevatedButton.styleFrom(
-            // backgroundColor: Colors.blueAccent,
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                foregroundColor: Color(0xff00296b),
-          ),
-        ),
-        appBar: AppBar(
-          title: Text('Your Documents', style: TextStyle(
-                                  fontWeight:
-                                      FontWeight.w500), ),
-          actions: [
-            IconButton(
-              onPressed: _navigateToUploadScreen,
-              icon: Icon(Icons.add),
-            )
-          ],
-        ),
+            onPressed: () {},
+            label: const Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.upload),
+                Text('Upload'),
+              ],
+            )),
         body: _isLoading
             ? Center(child: CircularProgressIndicator())
             : _loadedDocs.isEmpty
@@ -112,9 +130,6 @@ class _MyDocumentsState extends State<MyDocuments> {
                     itemCount: _loadedDocs.length,
                     itemBuilder: (context, index) => Dismissible(
                       key: ValueKey(_loadedDocs[index].id),
-                      onDismissed: (direction) {
-                        removeItem(_loadedDocs[index]);
-                      },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20.0, vertical: 6.0),
@@ -135,31 +150,17 @@ class _MyDocumentsState extends State<MyDocuments> {
                               ),
                             ],
                           ),
-                          // child: ListTile(
-                          //   title: Text(
-                          //     _loadedDocs[index].name,
-                          //     style: TextStyle(
-                          //         fontWeight:
-                          //             FontWeight.w600), // Slightly bold text
-                          //   ),
-                          //   leading: Icon(Icons.insert_drive_file,
-                          //       color: Colors.blueAccent), // File icon
-                          //   tileColor: Colors.white,
-                          //   onTap: () {
-                          //     _openImage(_loadedDocs[index].name);
-                          //   }, // Tile background color
-                          // ),
-
                           child: ListTile(
+                            leading: Icon(Icons.image_outlined,
+                                color: Color(0xff00296b)), // File icon
+                            tileColor:
+                                Color(0xffedf2fb), // Tile background color
                             title: Text(
                               _loadedDocs[index].name,
                               style: TextStyle(
                                   fontWeight:
                                       FontWeight.w600), // Slightly bold text
                             ),
-                            leading: Icon(Icons.image_outlined,
-                                color: Color(0xff00296b)), // File icon
-                            tileColor: Color(0xffedf2fb), // Tile background color
                             onTap: () {
                               _openImage(_loadedDocs[index].name);
                             },
