@@ -1,4 +1,5 @@
 import 'package:appdev/components/forgetpassdialog.dart';
+import 'package:appdev/pages/create_trip.dart';
 import 'package:appdev/pages/documents.dart';
 import 'package:appdev/pages/login.dart';
 import 'package:appdev/pages/register.dart';
@@ -46,13 +47,22 @@ void initState() {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 255, 255, 255)),
         useMaterial3: true,
+        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Color(0xffedf2fb), // background color 
+        appBarTheme: AppBarTheme(
+          foregroundColor:  Color(0xff03045e),
+          // titleTextStyle: TextStyle(fontWeight: FontWeight.w500),
+          backgroundColor: Color(0xffccdbfd)
+        )
       ),
+      
       initialRoute: '/login',
         routes: {
         '/tabs': (context) =>   TabsScreen(),
         '/login': (context) =>   LoginPage(),
         '/signup': (context) =>  RegisterPage(),
         '/uploadDocs': (context) =>  UploadPage(),
+        '/createtrip': (context) =>  CreateTrip(),
         '/myDocs': (context) =>  MyDocuments(),
         '/updatepasswordpage': (context) =>  UpdatePasswordPage()
 

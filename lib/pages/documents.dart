@@ -1,85 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:supabase_flutter/supabase_flutter.dart';
-
-// class MyDocuments extends StatefulWidget {
-//   const MyDocuments({super.key});
-
-//   @override
-//   State<MyDocuments> createState() => _MyDocumentsState();
-// }
-// // 1-------------------------------------------------------------------
-// class _MyDocumentsState extends State<MyDocuments> {
-//   var _isLoading = true;
-//   @override
-
-//   void initState() {
-//     // TODO: implement initState
-//     super.initState();
-//     _loaditems();
-//   }
-
-//   // void _loaditems()async{
-//   //   final List<FileObject> _loadedDocs = await
-//   // Supabase.instance.client.storage
-//   // .from('uploads2')
-//   // .list();
-
-//   // }
-
-//   void _loaditems() async {
-
-//   final List<FileObject> _loadedDocs = await
-//   Supabase.instance.client.storage
-//   .from('uploads2')
-//   .list();
-
-//     final List<FileObject> loadedItems = [];
-//     for (final item in _loadedDocs) {
-
-//       loadedItems.add(FileObject(
-//         name: item.name,
-//         bucketId: item.bucketId,
-//         id: item.id,
-//         buckets: item.buckets,
-//         createdAt: item.createdAt,
-//         lastAccessedAt: item.lastAccessedAt,
-//         metadata: item.metadata,
-//         owner: item.owner,
-//         updatedAt: item.updatedAt));
-//     }
-//     return;
-//   }
-
-//   // 2 --------------------------------------------------------------------------------------
-//   Widget build(BuildContext context) {
-
-//     Widget content = const Center(
-//       child: Text('No items added yet'),
-//     );
-
-//         if (_loadedDocs.isNotEmpty) {
-//       content = ListView.builder(
-//           itemCount: _.length,
-//           itemBuilder: ((context, index) => Dismissible(
-//                 onDismissed: (direction) {
-//                   removeItem(loadedItems[index]);
-//                 },
-//                 key: ValueKey(loadedItems[index].id),
-//                 child: ListTile(
-//                   title: Text([index].name),
-//                 ),
-//               )));
-//     }
-//   // 3 -----------------------------------------------------------------------------------
-//     return Scaffold(
-//       appBar: AppBar(
-//           title: Text('Your documents'),
-//           actions: [IconButton(onPressed: (){}, icon: Icon(Icons.add))],
-//         ),
-//         body: content
-//     );
-//   }
-// }
 
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -145,26 +63,40 @@ class _MyDocumentsState extends State<MyDocuments> {
     );
   }
 
+  void _shareDocument(String docName) {
+    // Implement share functionality here
+    print("Sharing: $docName");
+  }
+
+  void _deleteDocument(String docName) {
+    // Implement delete functionality here
+    print("Deleting: $docName");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: ElevatedButton.icon(onPressed: (){
-
-      }, label: const Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.upload),
-          Text('Upload'),
-        ],
-      ),
-      style: ElevatedButton.styleFrom(
-      // backgroundColor: Colors.blueAccent,
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-    ),
-      ),
+        floatingActionButton: ElevatedButton.icon(
+          onPressed: () {},
+          label: const Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.upload),
+              Text('  Upload'),
+            ],
+          ),
+          style: ElevatedButton.styleFrom(
+            // backgroundColor: Colors.blueAccent,
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                foregroundColor: Color(0xff00296b),
+          ),
+        ),
         appBar: AppBar(
-          title: Text('Your Documents'),
+          title: Text('Your Documents', style: TextStyle(
+                                  fontWeight:
+                                      FontWeight.w500), ),
           actions: [
             IconButton(
               onPressed: _navigateToUploadScreen,
@@ -203,6 +135,21 @@ class _MyDocumentsState extends State<MyDocuments> {
                               ),
                             ],
                           ),
+                          // child: ListTile(
+                          //   title: Text(
+                          //     _loadedDocs[index].name,
+                          //     style: TextStyle(
+                          //         fontWeight:
+                          //             FontWeight.w600), // Slightly bold text
+                          //   ),
+                          //   leading: Icon(Icons.insert_drive_file,
+                          //       color: Colors.blueAccent), // File icon
+                          //   tileColor: Colors.white,
+                          //   onTap: () {
+                          //     _openImage(_loadedDocs[index].name);
+                          //   }, // Tile background color
+                          // ),
+
                           child: ListTile(
                             title: Text(
                               _loadedDocs[index].name,
@@ -210,17 +157,50 @@ class _MyDocumentsState extends State<MyDocuments> {
                                   fontWeight:
                                       FontWeight.w600), // Slightly bold text
                             ),
-                            leading: Icon(Icons.insert_drive_file,
-                                color: Colors.blueAccent), // File icon
-                            tileColor: Colors.white,
+                            leading: Icon(Icons.image_outlined,
+                                color: Color(0xff00296b)), // File icon
+                            tileColor: Color(0xffedf2fb), // Tile background color
                             onTap: () {
                               _openImage(_loadedDocs[index].name);
-                            }, // Tile background color
+                            },
+                            trailing: PopupMenuButton<String>(
+                              icon: Icon(Icons.more_vert), // Three dots icon
+                              onSelected: (value) {
+                                if (value == 'share') {
+                                  _shareDocument(_loadedDocs[index].name);
+                                } else if (value == 'delete') {
+                                  _deleteDocument(_loadedDocs[index].name);
+                                }
+                              },
+                              itemBuilder: (context) => [
+                                PopupMenuItem(
+                                  value: 'share',
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.share,
+                                          color: Color(0xff00296b)),
+                                      SizedBox(width: 8),
+                                      Text('Share'),
+                                    ],
+                                  ),
+                                ),
+                                PopupMenuItem(
+                                  value: 'delete',
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.delete,
+                                          color: Colors.redAccent),
+                                      SizedBox(width: 8),
+                                      Text('Delete'),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  )
-    );
+                  ));
   }
 }
