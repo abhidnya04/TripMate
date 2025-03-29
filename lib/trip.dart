@@ -5,6 +5,7 @@ import 'components/articles_widget.dart';
 import 'components/saved_thumbnails.dart';
 import 'models/articles.dart';
 import 'models/saved.dart';
+import 'pages/tabs.dart';
 // import 'saved_itineraries.dart';
 
 class Trip extends StatefulWidget {
@@ -24,43 +25,39 @@ class _TripState extends State<Trip> {
     categories = SavedModel.getCategories();
     articles = ArticleModel.getArticles();
   }
-  
-    final supabase = Supabase.instance.client;
+
+  final supabase = Supabase.instance.client;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(size: 30),
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        actions: const [Icon(Icons.notifications_on)],
+        // backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        actions:  [
+          GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) => logotalert(),
+              );
+            },
+            child: Icon(Icons.person_4))
+          ],
         centerTitle: true,
-        title: const Text("Trip"),
+        title: const Text("TripMate", style: TextStyle(fontWeight: FontWeight.w500),),
         leading: GestureDetector(
             onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => logotalert(),
-                        );
-                      },
-            child: const Icon(Icons.power_settings_new)),
+              showDialog(
+                context: context,
+                builder: (context) => logotalert(),
+              );
+            },
+            child: const Icon(Icons.view_sidebar_outlined)),
       ),
       body: ListView(
         children: [
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: SearchBar(
-                  // backgroundColor: ,
-                  overlayColor: MaterialStateProperty.all(Colors.transparent),
-                  leading: const Icon(Icons.search),
-                  // backgroundColor: MaterialStateProperty.all(Colors.white),
-                  hintText: "Where can we take you?",
-                ),
-              ),
-            ],
-          ),
+          GreetContainer(),
           SavedItineraries(categories: categories),
           Padding(
             padding: const EdgeInsets.all(20.0),
@@ -86,6 +83,67 @@ class _TripState extends State<Trip> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Padding GreetContainer() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            gradient: LinearGradient(colors: [
+              Color(0xffccdbfd),
+              Color(0xffcaf0f8),
+            ])),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Hello Voyager 👋',
+              style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Ready for your next adventure?',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+                onPressed: () {
+Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => TabsScreen(initialIndex: 2)),
+  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xffccdbfd),
+                  foregroundColor: Color(0xff03045e),
+                  // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Create trip with AI  '),
+                    // Icon(Icons.maps_ugc_outlined)
+                    Image.asset(
+                      'assets/wand.png',
+                      height: 30,
+                    )
+                  ],
+                )),
+            SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
       ),
     );
   }
