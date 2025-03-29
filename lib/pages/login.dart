@@ -1,5 +1,6 @@
 import 'package:appdev/components/forgetpassdialog.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../components/my_button.dart';
@@ -66,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           16, 16, 16, MediaQuery.of(context).viewInsets.bottom),
@@ -76,20 +77,22 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 150),
 
                   // Logo
-                  Image.asset(
-                    'lib/images/TravelLuggage.png', 
-                    height: 130,
-                    width: 130,
-                  ),
+                  // Image.asset(
+                  //   'lib/images/TravelLuggage.png', 
+                  //   height: 130,
+                  //   width: 130,
+                  // ),
+                  Text('TripMate', style: GoogleFonts.pattaya(fontSize: 40, fontWeight: FontWeight.w500, color: Color(0xff03045e),
+                  ),),
                   const SizedBox(height: 20),
 
                   // Welcome text
                   Text(
                     'Welcome back, you\'ve been missed!',
-                    style: TextStyle(color: Colors.grey[700], fontSize: 16),
+                    style: TextStyle( color: Color(0xff03045e), fontSize: 16),
                   ),
                   const SizedBox(height: 25),
 
@@ -123,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                         );
                       },
                       child: const Text('Forgot Password?',
-                        style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                        style: TextStyle(color: Color(0xff03045e), fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
@@ -133,58 +136,76 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 25),
 
                   // login button
-                  TextButton(
-                    onPressed: () async {
-                      print('hello');
-                    final email = _email.text.trim();
-                    final password = _password.text.trim();
-
-                    if (email.isEmpty || password.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Email and Password cannot be empty')),
-                        );
-                      return;
-                      }
-
-                    if (mounted) setState(() => isLoading = true);
-
-                    try {
-                      final response = await supabase.auth.signInWithPassword(
-                      email: email,
-                      password: password,
-                      );
-
-                      if (response.session != null) {
-                      if (mounted) {
-                        Navigator.of(context).pushNamedAndRemoveUntil('/tabs', (route) => false);
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal:  25.0),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        print('hello');
+                      final email = _email.text.trim();
+                      final password = _password.text.trim();
+                    
+                      if (email.isEmpty || password.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Email and Password cannot be empty')),
+                          );
+                        return;
                         }
-                      } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Login failed: Invalid credentials')),
-                      );
-                      }
-                      } catch (error) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Login failed: Invalid email or password')),
-                      );
-                      }
-
-                      if (mounted) setState(() => isLoading = false); // ✅ Check mounted before calling setState
-                      },
-                      child: const Text('Login'),
-                      ),
+                    
+                      if (mounted) setState(() => isLoading = true);
+                    
+                      try {
+                        final response = await supabase.auth.signInWithPassword(
+                        email: email,
+                        password: password,
+                        );
+                    
+                        if (response.session != null) {
+                        if (mounted) {
+                          Navigator.of(context).pushNamedAndRemoveUntil('/tabs', (route) => false);
+                          }
+                        } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Login failed: Invalid credentials')),
+                        );
+                        }
+                        } catch (error) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Login failed: Invalid email or password')),
+                        );
+                        }
+                    
+                        if (mounted) setState(() => isLoading = false); // ✅ Check mounted before calling setState
+                        },
+                        child:  Container(
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Login', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 16), ),
+                            ],
+                          )),
+                    
+                        style: ElevatedButton.styleFrom(
+                          // fixedSize: Size.infinite,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)
+                          ),
+                          backgroundColor: Color(0xff03045e)
+                        ),
+                        ),
+                  ),
 
                   const SizedBox(height: 50),
 
                   // Divider
                   Row(
                     children: [
-                      Expanded(child: Divider(thickness: 0.5, color: Colors.grey[400])),
+                      Expanded(child: Divider(thickness: 0.5, color: Color(0xff03045e))),
                       const Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Text('Or continue with', style: TextStyle(color: Colors.grey)),
+                        child: Text('Or continue with', style: TextStyle(color: Color(0xff03045e))),
                       ),
-                      Expanded(child: Divider(thickness: 0.5, color: Colors.grey[400])),
+                      Expanded(child: Divider(thickness: 0.5, color: Color(0xff03045e))),
                     ],
                   ),
                   const SizedBox(height: 40),
@@ -201,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('Not a member?', style: TextStyle(color: Colors.grey)),
+                      const Text('Not a member?', style: TextStyle(color: Color(0xff03045e))),
                       const SizedBox(width: 4),
                       GestureDetector(
                         onTap: () {
@@ -209,7 +230,7 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         child: const Text(
                           'Register now',
-                          style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                          style: TextStyle(color:  Color(0xff03045e), fontWeight: FontWeight.bold, decoration: TextDecoration.underline),
                         ),
                       ),
                     ],

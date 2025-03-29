@@ -121,7 +121,7 @@ class _MyDocumentsState extends State<MyDocuments> {
         ),
         floatingActionButton: ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
-            foregroundColor: Color(0xff00296b)
+            // foregroundColor: Color(0xff00296b)
           ),
             onPressed: () {
               Navigator.pushNamed(context, '/uploadDocs');

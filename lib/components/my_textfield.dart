@@ -18,16 +18,19 @@ class MyTextField extends StatelessWidget{
     return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: TextField(
+                // style: TextFormField(),
                 controller: controller,
                 obscureText: obscureText,
                 decoration: InputDecoration(
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: const BorderSide(color: Colors.white),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey.shade400),
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide(color: Color(0xff03045e), width: 2),
                   ),
-                  fillColor: Colors.grey.shade200,
+                  fillColor: Color(0xffffffff),
                   filled: true,
                   hintText: hintText,
                   hintStyle: TextStyle(color: Colors.grey[500]),

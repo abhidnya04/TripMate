@@ -46,6 +46,7 @@ dependencies:
   open_file: ^3.3.2
   
   url_launcher: ^6.3.1
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -90,6 +91,7 @@ flutter:
     - assets/icons/coin.png
     - assets/money.png
     - assets/bag.png
+    - assets/dest.png
     - assets/dollar.png
     - assets/fam.png
     - assets/frnd.png

@@ -42,20 +42,31 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Color(0xffedf2fb),
       title: const Text("Reset Password"),
       content: TextField(
+
         controller: emailController,
         keyboardType: TextInputType.emailAddress,
-        decoration: const InputDecoration(labelText: "Enter your email"),
+        decoration: const InputDecoration(
+          focusColor: Color(0xff03045e),
+          // enabledBorder: OutlineInputBorder(),
+          floatingLabelStyle: TextStyle(color: Color(0xff03045e)),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Color(0xff03045e))
+
+          ),
+          labelText: "Enter your email"), style: TextStyle(color: Color(0xff03045e)),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text("Cancel"),
+          child: const Text("Cancel" , style: TextStyle(color: Color(0xff03045e)),),
         ),
         ElevatedButton(
           onPressed: resetPassword,
           child: const Text("Send Reset Link"),
+          // style: ,
         ),
       ],
     );
