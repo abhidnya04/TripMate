@@ -41,10 +41,10 @@ class _TranslationPageState extends State<TranslationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightGreen[200],
+      // backgroundColor: Colors.lightGreen[200],
       appBar: AppBar(
         title: const Text("Translator"),
-        backgroundColor: Colors.lightGreen[700],
+        // backgroundColor: Colors.lightGreen[700],
       ),
       body: SingleChildScrollView(
         child: Padding(

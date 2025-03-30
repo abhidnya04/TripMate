@@ -1,4 +1,5 @@
 import 'package:appdev/components/forgetpassdialog.dart';
+import 'package:appdev/pages/create_trip.dart';
 import 'package:appdev/pages/documents.dart';
 import 'package:appdev/pages/login.dart';
 import 'package:appdev/pages/register.dart';
@@ -6,6 +7,7 @@ import 'package:appdev/pages/reset_password.dart';
 import 'package:appdev/pages/tabs.dart';
 import 'package:appdev/pages/upload_docs.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
@@ -45,14 +47,31 @@ void initState() {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 255, 255, 255)),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color(0xff03045e),
+            foregroundColor: Colors.white
+          )
+        ),
         useMaterial3: true,
+        primarySwatch: Colors.blue,
+        textTheme: GoogleFonts.robotoTextTheme(),
+        scaffoldBackgroundColor: Color(0xffedf2fb), // background color 
+        appBarTheme: AppBarTheme(
+          titleTextStyle: TextStyle(fontWeight: FontWeight.w500 , color: Color(0xff03045e) , fontSize: 32),
+          foregroundColor:  Color(0xff03045e),
+          // titleTextStyle: TextStyle(fontWeight: FontWeight.w500),
+          backgroundColor: Color(0xffedf2fb)
+        )
       ),
+      
       initialRoute: '/login',
         routes: {
         '/tabs': (context) =>   TabsScreen(),
         '/login': (context) =>   LoginPage(),
         '/signup': (context) =>  RegisterPage(),
         '/uploadDocs': (context) =>  UploadPage(),
+        '/createtrip': (context) =>  CreateTrip(),
         '/myDocs': (context) =>  MyDocuments(),
         '/updatepasswordpage': (context) =>  UpdatePasswordPage()
 

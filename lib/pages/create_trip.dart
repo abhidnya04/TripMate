@@ -1,6 +1,7 @@
 import 'package:appdev/gemini_service.dart';
 import 'package:appdev/pages/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'budget_selection.dart';
 import 'itinerary_page.dart';
@@ -141,10 +142,11 @@ class _CreateTripState extends State<CreateTrip> {
                       height: 160,
                       width: double.infinity,
                       child: Image.asset(
-                        'lib/images/travel.jpeg',
-                        fit: BoxFit.cover,
+                        'assets/dest.png',
+                        fit: BoxFit.contain,
                       ),
                     ),
+                    // Text('Lets create your trip with AI', style: GoogleFonts.pattaya(),),
                     const SizedBox(height: 20),
 
                     // Custom Text Fields
