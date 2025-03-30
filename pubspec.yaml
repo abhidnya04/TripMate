@@ -80,6 +80,8 @@ flutter:
     - assets/navbar/trips.png
     - assets/d1.jpg
     - assets/kol.jpg
+    - assets/create.jpg
+    - assets/create2.png
     - assets/shm_f.png
     - assets/wand.png
     - assets/goa.jpg
@@ -88,6 +90,7 @@ flutter:
     - assets/kyoto.jpg
     - assets/bali.jpg
     - assets/couple.png
+    - assets/boat.png
     - assets/icons/coin.png
     - assets/money.png
     - assets/bag.png

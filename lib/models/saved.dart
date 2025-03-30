@@ -4,6 +4,7 @@ class SavedModel {
   final String name;
   final Color boxColor;
   final String imagePath;
+  
 
   SavedModel({
     required this.name,
@@ -17,6 +18,7 @@ class SavedModel {
         name: 'Delhi',
         imagePath: 'assets/d1.jpg',
         boxColor: Colors.white,
+
       ),
       SavedModel(
         name: 'Shimla',

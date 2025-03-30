@@ -139,10 +139,10 @@ class _CreateTripState extends State<CreateTrip> {
                   children: [
                     // Image Section
                     SizedBox(
-                      height: 160,
+                      height: 300,
                       width: double.infinity,
                       child: Image.asset(
-                        'assets/dest.png',
+                        'assets/create2.png',
                         fit: BoxFit.contain,
                       ),
                     ),
