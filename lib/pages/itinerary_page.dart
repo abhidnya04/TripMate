@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:appdev/flight_booking_screen.dart';
 import 'package:appdev/itinerary_model.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -108,6 +109,9 @@ class ItineraryPage extends StatelessWidget {
             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
+
+           FlightBookingWidget(),
+           
           Text(
             "Lodging Options:",
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
