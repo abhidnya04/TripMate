@@ -117,7 +117,7 @@ class _CreateTripState extends State<CreateTrip> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 70,
+        toolbarHeight: 50,
         centerTitle: true,
         title: const Text(
           'Create Trip',
@@ -139,7 +139,7 @@ class _CreateTripState extends State<CreateTrip> {
                   children: [
                     // Image Section
                     SizedBox(
-                      height: 300,
+                      height: 220,
                       width: double.infinity,
                       child: Image.asset(
                         'assets/create2.png',

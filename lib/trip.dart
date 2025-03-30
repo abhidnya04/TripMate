@@ -125,10 +125,11 @@ Widget build(BuildContext context) {
       children: [
         // Background Greeting Section
         GreetContainer(),
+        
 
         // Foreground Card Section
         Positioned(
-          top: MediaQuery.of(context).size.height * 0.20, // Adjust for overlap
+          top: MediaQuery.of(context).size.height * 0.23, // Adjust for overlap
           left: 0.001,
           right: 0.001,
           child: Card(
