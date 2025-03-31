@@ -476,7 +476,7 @@ class _FlightBookingWidgetState extends State<FlightBookingWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Find Flight",
+                "Find Flights",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               if (isExpanded) ...[

@@ -129,7 +129,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
         children: [
           Text(
             itineraryData.title,
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xff03045e)),
           ),
           const SizedBox(height: 10),
 
@@ -139,13 +139,14 @@ class _ItineraryPageState extends State<ItineraryPage> {
           Text("Lodging Options:", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           ...itineraryData.lodgingOptions.map((hotel) => Card(
                 elevation: 4,
+                shadowColor: Color(0xff03045e),
                 margin: const EdgeInsets.symmetric(vertical: 4),
                 child: ListTile(
                   contentPadding: const EdgeInsets.all(10),
                   title: Text(hotel.hotelName, style: const TextStyle(fontWeight: FontWeight.bold)),
                   subtitle: Text("Price: ${hotel.price}"),
                   trailing: IconButton(
-                    icon: const Icon(Icons.open_in_new),
+                    icon: const Icon(Icons.open_in_new , color: Color(0xff03045e),),
                     onPressed: () => _launchURL(context, hotel.link),
                   ),
                 ),
@@ -183,7 +184,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
           const SizedBox(height: 20),
           Text("Budget-Friendly Tips:", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           ...itineraryData.budgetFriendlyTips.map((tip) => ListTile(
-                leading: const Icon(Icons.monetization_on),
+                leading: const Icon(Icons.monetization_on , color: Color(0xff03045e),),
                 title: Text(tip,style: const TextStyle(fontSize: 15)),
               )),
           const SizedBox(height: 20),
