@@ -117,10 +117,10 @@ class _CreateTripState extends State<CreateTrip> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 70,
+        // toolbarHeight: 70,
         centerTitle: true,
         title: const Text(
-          'Create Trip',
+          'Lets Create your Trip',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
         ),
       ),
