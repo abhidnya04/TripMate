@@ -37,6 +37,7 @@ void initState() {
       }
     });
   });
+  
 }
 
   @override
@@ -64,7 +65,6 @@ void initState() {
           backgroundColor: Color(0xffedf2fb)
         )
       ),
-      
       initialRoute: '/login',
         routes: {
         '/tabs': (context) =>   TabsScreen(),

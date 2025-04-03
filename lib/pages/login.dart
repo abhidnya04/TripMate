@@ -1,6 +1,7 @@
 import 'package:appdev/components/forgetpassdialog.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../components/my_button.dart';
@@ -22,6 +23,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
+    String? _userId;
     _email=TextEditingController();
     _password=TextEditingController();
     super.initState();
@@ -35,16 +37,26 @@ class _LoginPageState extends State<LoginPage> {
   WidgetsBinding.instance.addPostFrameCallback((_) {
     checkUserSession(); // Check session at startup
   });
+  // supabase.auth.onAuthStateChange.listen((data){
+  //   setState(() {
+  //     _userId=data.session?.user.id;
+  //   });
+  // });
   }
 
-  Future<void> checkUserSession() async {
+Future<void> checkUserSession() async {
   final session = supabase.auth.currentSession;
-  if (session != null) {
+  print("Session: $session"); // Debugging
+  
+  if (session != null && session.user != null) {
     if (mounted) {
       Navigator.of(context).pushReplacementNamed('/tabs'); // Navigate to home
     }
+  } else {
+    print("User is NOT logged in!");
   }
 }
+
 
   @override
   void dispose() {
@@ -53,15 +65,102 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
   final supabase = Supabase.instance.client;
+
+
+
+
+
+
   Future<void> signInWithGoogle() async {
-    try {
-      await supabase.auth.signInWithOAuth(OAuthProvider.google);
-    } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Google Sign-In failed: $error')),
-      );
+  try {
+    await supabase.auth.signInWithOAuth(
+      OAuthProvider.google,
+      redirectTo: "com.example.appdev://login-callback", // Ensure it matches your package name
+    );
+
+    // Check session after successful login
+    final session = supabase.auth.currentSession;
+    if (session != null) {
+      if (mounted) {
+        Navigator.of(context).pushReplacementNamed('/tabs'); // Navigate to home
+      }
     }
+  } catch (error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Google Sign-In failed: $error')),
+    );
+    debugPrint('Google Sign-In Error: $error');
   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// Future<void> _googleSignIn() async {
+//   try {
+//     const webClientId = '959813512476-31920amcqn6djdidshfm0mo816f1j4t6.apps.googleusercontent.com';
+//     const iosClientId = '959813512476-o7jglqn6lct1k166thd3n09iit0cp35j.apps.googleusercontent.com';
+
+//     final GoogleSignIn googleSignIn = GoogleSignIn(
+//       clientId: iosClientId,
+//       serverClientId: webClientId,
+//     );
+
+//     final googleUser = await googleSignIn.signIn();
+//     if (googleUser == null) {
+//       throw 'Google Sign-In canceled';
+//     }
+
+//     final googleAuth = await googleUser.authentication;
+//     final accessToken = googleAuth.accessToken;
+//     final idToken = googleAuth.idToken;
+
+//     if (accessToken == null || idToken == null) {
+//       throw 'Failed to get authentication tokens.';
+//     }
+
+//     final AuthResponse response = await supabase.auth.signInWithIdToken(
+//       provider: OAuthProvider.google,
+//       idToken: idToken,
+//       accessToken: accessToken,
+//     );
+
+//     if (response.session != null) {
+//       if (mounted) {
+//         Navigator.of(context).pushReplacementNamed('/tabs');
+//       }
+//     } else {
+//       throw 'Authentication failed';
+//     }
+//   } catch (error) {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(content: Text('Login failed: $error')),
+//     );
+//     debugPrint('Google Sign-In Error: $error');
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -210,6 +309,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 40),
 
+
+
+
+
+
+
+
+
                   // Google Sign-In
                   GestureDetector(
                     onTap: signInWithGoogle, // Attach Google Sign-In function
@@ -217,6 +324,13 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   
                   const SizedBox(height: 50),
+
+
+
+
+
+
+
 
                   // Register option
                   Row(
