@@ -93,42 +93,43 @@ class _TripState extends State<Trip> {
 @override
 Widget build(BuildContext context) {
   return Scaffold(
-    appBar: AppBar(
-      iconTheme: const IconThemeData(size: 30),
-      actions: [
-        GestureDetector(
-          onTap: () {
-            showDialog(
-              context: context,
-              builder: (context) => logotalert(),
-            );
-          },
-          child: Icon(Icons.person_4),
-        )
-      ],
-      centerTitle: true,
-      title:  Text("TripMate", style: GoogleFonts.pattaya(fontWeight: FontWeight.w500, fontSize: 32)),
-      // leading: GestureDetector(
-      //   onTap: () {
-      //     showDialog(
-      //       context: context,
-      //       builder: (context) => logotalert(),
-      //     );
-      //   },
-      //   child: const Icon(Icons.view_sidebar_outlined),
-      // ),
-      // leading: Drawer(),
+    // appBar: AppBar(
+    //   iconTheme: const IconThemeData(size: 30),
+    //   actions: [
+    //     GestureDetector(
+    //       onTap: () {
+    //         showDialog(
+    //           context: context,
+    //           builder: (context) => logotalert(),
+    //         );
+    //       },
+    //       child: Icon(Icons.person_4),
+    //     )
+    //   ],
+    //   centerTitle: true,
+    //   title:  Text("TripMate", style: GoogleFonts.pattaya(fontWeight: FontWeight.w500, fontSize: 32)),
+    //   // leading: GestureDetector(
+    //   //   onTap: () {
+    //   //     showDialog(
+    //   //       context: context,
+    //   //       builder: (context) => logotalert(),
+    //   //     );
+    //   //   },
+    //   //   child: const Icon(Icons.view_sidebar_outlined),
+    //   // ),
+    //   // leading: Drawer(),
       
-    ),
-    drawer: Drawer(),
+    // ),
+    // drawer: Drawer(),
     body: Stack(
       children: [
         // Background Greeting Section
         GreetContainer(),
+        
 
         // Foreground Card Section
         Positioned(
-          top: MediaQuery.of(context).size.height * 0.20, // Adjust for overlap
+          top: MediaQuery.of(context).size.height * 0.23, // Adjust for overlap
           left: 0.001,
           right: 0.001,
           child: Card(

@@ -115,8 +115,8 @@ class _MyDocumentsState extends State<MyDocuments> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            'My Uploaded documents',
-            style: TextStyle(fontWeight: FontWeight.w500),
+            ' My Uploaded documents',
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
           ),
         ),
         floatingActionButton: ElevatedButton.icon(

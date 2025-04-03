@@ -6,6 +6,10 @@ import 'package:appdev/pages/register.dart';
 import 'package:appdev/pages/reset_password.dart';
 import 'package:appdev/pages/tabs.dart';
 import 'package:appdev/pages/upload_docs.dart';
+import 'package:appdev/savedIineraries/delhi.dart';
+import 'package:appdev/savedIineraries/goa.dart';
+import 'package:appdev/savedIineraries/kolkata.dart';
+import 'package:appdev/savedIineraries/shimla.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -73,6 +77,10 @@ void initState() {
         '/uploadDocs': (context) =>  UploadPage(),
         '/createtrip': (context) =>  CreateTrip(),
         '/myDocs': (context) =>  MyDocuments(),
+        '/delhi': (context) =>  DelhiItinerary(),
+        '/goa': (context) =>  GoaItinerary(),
+        '/kolkata': (context) =>  KolkataItinerary(),
+        '/shimla': (context) =>  ShimlaItinerary(),
         '/updatepasswordpage': (context) =>  UpdatePasswordPage()
 
       },

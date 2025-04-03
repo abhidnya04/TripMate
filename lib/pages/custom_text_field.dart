@@ -16,6 +16,7 @@ class CustomTextField extends StatelessWidget {
       child: Stack(
         children: [
           TextField(
+            textCapitalization: TextCapitalization.sentences,
              controller: controller, // Added controller
             textAlignVertical: TextAlignVertical.bottom,
             style: const TextStyle(fontSize: 20, color: Colors.black),

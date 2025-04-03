@@ -44,7 +44,12 @@ dependencies:
   pdf: ^3.10.8
   path_provider: ^2.1.2
   open_file: ^3.3.2
+<<<<<<< HEAD
   google_sign_in: ^6.3.0
+=======
+  intl: ^0.20.2
+  flutter_typeahead: ^5.2.0
+>>>>>>> 68d29fa409b65722d907e543fd75780c981d63f4
   
   url_launcher: ^6.3.1
   google_fonts: ^6.2.1
@@ -81,6 +86,8 @@ flutter:
     - assets/navbar/trips.png
     - assets/d1.jpg
     - assets/kol.jpg
+    - assets/create.jpg
+    - assets/create2.png
     - assets/shm_f.png
     - assets/wand.png
     - assets/goa.jpg
@@ -89,6 +96,7 @@ flutter:
     - assets/kyoto.jpg
     - assets/bali.jpg
     - assets/couple.png
+    - assets/boat.png
     - assets/icons/coin.png
     - assets/money.png
     - assets/bag.png
@@ -106,6 +114,13 @@ flutter:
     - lib/images/med.png
     - lib/images/high.png
     - assets/bus_loading.gif
+    - assets/low_budget.png
+    - assets/med_budget.png
+    - assets/high_budget.png
+    - assets/solot.png
+    - assets/couplet.png
+    - assets/frand.png
+    - assets/famil.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

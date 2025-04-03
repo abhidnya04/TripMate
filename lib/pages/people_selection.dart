@@ -24,7 +24,7 @@ class PeopleSelection extends StatelessWidget {
               Expanded(
                 child: SelectionButton(
                   label: "Single",
-                  imagePath: "assets/solo.png",
+                  imagePath: "assets/solot.png",
                   isSelected: selectedPeople == "Single",
                   onTap: () => onPeopleSelected("Single"),
                 ),
@@ -33,7 +33,7 @@ class PeopleSelection extends StatelessWidget {
               Expanded(
                 child: SelectionButton(
                   label: "Couple",
-                  imagePath: "assets/couple.png",
+                  imagePath: "assets/couplet.png",
                   isSelected: selectedPeople == "Couple",
                   onTap: () => onPeopleSelected("Couple"),
                 ),
@@ -42,7 +42,7 @@ class PeopleSelection extends StatelessWidget {
               Expanded(
                 child: SelectionButton(
                   label: "Friend",
-                  imagePath: "assets/frnd.png",
+                  imagePath: "assets/frand.png",
                   isSelected: selectedPeople == "Friend",
                   onTap: () => onPeopleSelected("Friend"),
                 ),
@@ -51,7 +51,7 @@ class PeopleSelection extends StatelessWidget {
               Expanded(
                 child: SelectionButton(
                   label: "Family",
-                  imagePath: "assets/fam.png",
+                  imagePath: "assets/famil.png",
                   isSelected: selectedPeople == "Family",
                   onTap: () => onPeopleSelected("Family"),
                 ),

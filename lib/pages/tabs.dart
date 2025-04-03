@@ -5,6 +5,7 @@ import 'package:appdev/pages/your_trips.dart';
 // import 'package:appdev/pages/upload_docs.dart';
 import 'package:appdev/trip.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // class TabsScreen extends StatefulWidget {
 //   static final GlobalKey<_TabsScreenState> tabsKey = GlobalKey<_TabsScreenState>();
@@ -116,6 +117,34 @@ class _TabsScreenState extends State<TabsScreen> {
     }
 
     return Scaffold(
+      appBar: AppBar(
+      iconTheme: const IconThemeData(size: 30),
+      actions: [
+        GestureDetector(
+          onTap: () {
+            // showDialog(
+            //   context: context,
+            //   builder: (context) => logotalert(),
+            // );
+          },
+          child: Icon(Icons.person_4),
+        )
+      ],
+      centerTitle: true,
+      title:  Text("TripMate", style: GoogleFonts.pattaya(fontWeight: FontWeight.w500, fontSize: 32)),
+      // leading: GestureDetector(
+      //   onTap: () {
+      //     showDialog(
+      //       context: context,
+      //       builder: (context) => logotalert(),
+      //     );
+      //   },
+      //   child: const Icon(Icons.view_sidebar_outlined),
+      // ),
+      // leading: Drawer(),
+      
+    ),
+    drawer: Drawer(),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
         selectedIconTheme: IconThemeData(color: Color(0xff03045e)),
