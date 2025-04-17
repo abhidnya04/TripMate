@@ -224,7 +224,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
             // onPressed: () => _generatePdf(context, itineraryData),
             onPressed: () async {
     // await _generatePdf(context, itineraryData);  // Local PDF generation
-    await _saveToSupabase(widget.itinerary, itineraryData.title);  // Supabase save
+    await _saveToSupabase(widget.itinerary, widget.userTitle);  // Supabase save
   },
             child: const Text("Download Itinerary"),
           ),
