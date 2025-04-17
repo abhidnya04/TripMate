@@ -117,7 +117,9 @@ class _TabsScreenState extends State<TabsScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: _selectedPageIndex == 0 ? null :
+      
+      AppBar(
       iconTheme: const IconThemeData(size: 30),
       actions: [
         GestureDetector(
