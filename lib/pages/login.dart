@@ -1,12 +1,12 @@
 import 'package:appdev/components/forgetpassdialog.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+//import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../components/my_button.dart';
+//import '../components/my_button.dart';
 import '../components/my_textfield.dart';
 import '../components/square_tile.dart';
-import 'register.dart';
+//import 'register.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                const SizedBox(height: 10),
+                //const SizedBox(height: 5),
 
                  // Logo
                   Image.asset(
@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   // Text('TripMate', style: GoogleFonts.pattaya(fontSize: 40, fontWeight: FontWeight.w500, color: Color(0xff03045e),
                   // ),),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 6),
 
                   // Welcome text
                   Text(
@@ -195,7 +195,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                   ),
 
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 30),
 
                   // Divider
                   Row(
@@ -208,7 +208,7 @@ class _LoginPageState extends State<LoginPage> {
                       Expanded(child: Divider(thickness: 0.5, color: Color(0xff03045e))),
                     ],
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 20),
 
                   // Google Sign-In
                   GestureDetector(
@@ -216,7 +216,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: const SquareTile(imagePath: 'lib/images/google.png'),
                   ),
                   
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 30),
 
                   // Register option
                   Row(
