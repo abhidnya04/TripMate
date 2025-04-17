@@ -109,6 +109,7 @@ flutter:
     - lib/images/low.png
     - lib/images/med.png
     - lib/images/high.png
+    - lib/images/logo.png
     - assets/bus_loading.gif
     - assets/low_budget.png
     - assets/med_budget.png
