@@ -99,7 +99,10 @@ class _CreateTripState extends State<CreateTrip> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ItineraryPage(itinerary: itinerary),
+            builder: (context) => ItineraryPage(
+              itinerary: itinerary,
+              userTitle: tripNameController.text,
+              ),
           ),
         );
       }
@@ -141,7 +144,7 @@ class _CreateTripState extends State<CreateTrip> {
                   children: [
                     // Image Section
                     SizedBox(
-                      height: 220,
+                      height: 250,
                       width: double.infinity,
                       child: Image.asset(
                         'assets/create2.png',
@@ -216,7 +219,7 @@ class _CreateTripState extends State<CreateTrip> {
                       ),
                     ),
 
-                    const SizedBox(height: 20),
+                    // const SizedBox(height: 10),
 
                     // Submit Button
                     Padding(
