@@ -77,17 +77,17 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 150),
+                const SizedBox(height: 10),
 
-                  // Logo
-                  // Image.asset(
-                  //   'lib/images/TravelLuggage.png', 
-                  //   height: 130,
-                  //   width: 130,
-                  // ),
-                  Text('TripMate', style: GoogleFonts.pattaya(fontSize: 40, fontWeight: FontWeight.w500, color: Color(0xff03045e),
-                  ),),
-                  const SizedBox(height: 20),
+                 // Logo
+                  Image.asset(
+                    'lib/images/logo.png', 
+                    height: 200,
+                    width: 200,
+                  ),
+                  // Text('TripMate', style: GoogleFonts.pattaya(fontSize: 40, fontWeight: FontWeight.w500, color: Color(0xff03045e),
+                  // ),),
+                  const SizedBox(height: 8),
 
                   // Welcome text
                   Text(
@@ -195,7 +195,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                   ),
 
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 40),
 
                   // Divider
                   Row(
@@ -208,7 +208,7 @@ class _LoginPageState extends State<LoginPage> {
                       Expanded(child: Divider(thickness: 0.5, color: Color(0xff03045e))),
                     ],
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 30),
 
                   // Google Sign-In
                   GestureDetector(
@@ -216,7 +216,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: const SquareTile(imagePath: 'lib/images/google.png'),
                   ),
                   
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 40),
 
                   // Register option
                   Row(

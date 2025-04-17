@@ -1,3 +1,4 @@
+import 'package:appdev/components/logoutalert.dart';
 import 'package:appdev/pages/create_trip.dart';
 import 'package:appdev/pages/documents.dart';
 import 'package:appdev/pages/translate.dart';
@@ -124,10 +125,10 @@ class _TabsScreenState extends State<TabsScreen> {
       actions: [
         GestureDetector(
           onTap: () {
-            // showDialog(
-            //   context: context,
-            //   builder: (context) => logotalert(),
-            // );
+            showDialog(
+              context: context,
+              builder: (context) => logotalert(),
+            );
           },
           child: Icon(Icons.person_4),
         )
