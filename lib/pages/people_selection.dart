@@ -41,10 +41,10 @@ class PeopleSelection extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: SelectionButton(
-                  label: "Friend",
+                  label: "Friends",
                   imagePath: "assets/frand.png",
-                  isSelected: selectedPeople == "Friend",
-                  onTap: () => onPeopleSelected("Friend"),
+                  isSelected: selectedPeople == "Friends",
+                  onTap: () => onPeopleSelected("Friends"),
                 ),
               ),
               const SizedBox(width: 10),
