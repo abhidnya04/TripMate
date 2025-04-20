@@ -42,13 +42,15 @@ dependencies:
   google_generative_ai: ^0.4.6
   app_links: ^6.4.0
   pdf: ^3.10.8
-  path_provider: ^2.1.2
+  path_provider: ^2.1.5
   open_file: ^3.3.2
   intl: ^0.20.2
   flutter_typeahead: ^5.2.0
   
   url_launcher: ^6.3.1
   google_fonts: ^6.2.1
+  flutter_dotenv: ^5.2.1
+  share_plus: ^10.1.4
 
 dev_dependencies:
   flutter_test:
@@ -118,6 +120,7 @@ flutter:
     - assets/couplet.png
     - assets/frand.png
     - assets/famil.png
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

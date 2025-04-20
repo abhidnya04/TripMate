@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'imageViewScreen.dart';
+import 'dart:io';
+
 
 class MyDocuments extends StatefulWidget {
   const MyDocuments({super.key});
@@ -80,15 +84,84 @@ class _MyDocumentsState extends State<MyDocuments> {
     }
   }
 
-  void _shareDocument(String docName) {
-    // Implement share functionality here
-    print("Sharing: $docName");
+void _shareDocument(String docName) async {
+  final userId = Supabase.instance.client.auth.currentUser?.id;
+
+  if (userId == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('User not logged in')),
+    );
+    return;
   }
 
-  void _deleteDocument(String docName) {
-    // Implement delete functionality here
-    print("Deleting: $docName");
+  try {
+    // 1. Generate signed URL to download file
+    final signedUrl = await Supabase.instance.client.storage
+        .from('privatedoc')
+        .createSignedUrl('$userId/$docName', 3600);
+
+    // 2. Download file content
+    final response = await http.get(Uri.parse(signedUrl));
+    if (response.statusCode != 200) {
+      throw Exception("Failed to download file");
+    }
+
+    // 3. Get local path to save file
+    final tempDir = await getTemporaryDirectory();
+    final localFilePath = '${tempDir.path}/$docName';
+
+    final file = File(localFilePath);
+    await file.writeAsBytes(response.bodyBytes);
+
+    // 4. Share file
+    await Share.shareXFiles([XFile(file.path)], text: 'Sharing $docName');
+
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error sharing document: $e')),
+    );
   }
+}
+
+void _deleteDocument(String docName) async {
+  FileObject? itemToDelete;
+  for (final doc in _loadedDocs) {
+    if (doc.name == docName) {
+      itemToDelete = doc;
+      break;
+    }
+  }
+
+  if (itemToDelete == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Document not found.')),
+    );
+    return;
+  }
+
+  final confirm = await showDialog<bool>(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Delete Document'),
+      content: const Text('Are you sure you want to delete this document?'),
+      actions: [
+        TextButton(
+          child: const Text('Cancel'),
+          onPressed: () => Navigator.pop(context, false),
+        ),
+        TextButton(
+          child: const Text('Delete', style: TextStyle(color: Colors.red)),
+          onPressed: () => Navigator.pop(context, true),
+        ),
+      ],
+    ),
+  );
+
+  if (confirm == true) {
+    removeItem(itemToDelete);
+  }
+}
+
 
   void _openImage(String fileName) async {
     final userId = Supabase.instance.client.auth.currentUser?.id;
@@ -123,9 +196,8 @@ class _MyDocumentsState extends State<MyDocuments> {
           style: ElevatedButton.styleFrom(
             // foregroundColor: Color(0xff00296b)
           ),
-            onPressed: () {
-              Navigator.pushNamed(context, '/uploadDocs');
-            },
+onPressed: _navigateToUploadScreen,
+
             label: const Row(
               mainAxisSize: MainAxisSize.min,
               children: [
