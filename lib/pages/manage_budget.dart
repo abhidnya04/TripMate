@@ -1,3 +1,4 @@
+import 'package:appdev/main.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -143,78 +144,113 @@ Future<void> fetchBudgetAndExpenses() async {
 
 
   @override
-  Widget build(BuildContext context) {
-    final remaining = (totalBudget ?? 0) - totalSpent;
+Widget build(BuildContext context) {
+  final remaining = (totalBudget ?? 0) - totalSpent;
 
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-  onPressed: () {
-    showDialog(
-      context: context,
-      builder: (_) => AddExpenseDialog(
-        itineraryId: widget.itineraryId,
-        onExpenseAdded: fetchBudgetAndExpenses,
-      ),
-    );
-  },
-  child: const Icon(Icons.add),
-  backgroundColor: Colors.blue,
-),
-
-      appBar: AppBar(
-        title: const Text('Manage Budget'),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: totalBudget == null
-            ? const Center(child: CircularProgressIndicator())
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Card(
-                    color: Colors.blue.shade50,
-                    elevation: 4,
-                    child: ListTile(
-                      title: const Text('Total Budget', style: TextStyle(fontWeight: FontWeight.bold)),
-                      trailing: Text('₹${totalBudget!.toStringAsFixed(2)}'),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Card(
-                    color: Colors.green.shade50,
-                    elevation: 4,
-                    child: ListTile(
-                      title: const Text('Remaining Budget', style: TextStyle(fontWeight: FontWeight.bold)),
-                      trailing: Text('₹${remaining.toStringAsFixed(2)}'),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  const Text('Expenses:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 8),
-                  Expanded(
-                    child: expenses.isEmpty
-                        ? const Center(child: Text('No expenses added yet.'))
-                        : ListView.builder(
-                            itemCount: expenses.length,
-                            itemBuilder: (context, index) {
-                              final exp = expenses[index];
-                              return Card(
-                                elevation: 3,
-                                child: ListTile(
-                                  title: Text(exp['type']),
-                                  subtitle: Text(exp['note'] ?? ''),
-                                  trailing: Text('₹${(exp['amount'] as num).toStringAsFixed(2)}'),
-                                ),
-                              );
-                            },
+  return Scaffold(
+    floatingActionButton: FloatingActionButton(
+      foregroundColor: Colors.white,
+      backgroundColor: darkblue,
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (_) => AddExpenseDialog(
+            itineraryId: widget.itineraryId,
+            onExpenseAdded: fetchBudgetAndExpenses,
+          ),
+        );
+      },
+      child: const Icon(Icons.add),
+    ),
+    appBar: AppBar(
+      title: const Text('Manage Budget'),
+      centerTitle: true,
+    ),
+    body: Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: totalBudget == null
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 160,
+                  color: Colors.blue.shade50,
+                  // elevation: 4,
+                  // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Remaining Budget',
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: darkblue,
                           ),
+                        ),
+                        Text(
+                          '₹${remaining.toStringAsFixed(2)}',
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: darkblue,
+                          ),
+                        ),
+                        Spacer(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Total Budget: ₹${totalBudget!.toStringAsFixed(0)}',
+                              style:  TextStyle(fontSize: 16, color: darkblue),
+                              
+                            ),
+                            Text(
+                              'Spent: ₹${totalSpent.toStringAsFixed(0)}',
+                              style:  TextStyle(fontSize: 16, color: darkblue),
+
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-      ),
-    );
-  }
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Expenses:',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                Expanded(
+                  child: expenses.isEmpty
+                      ? const Center(child: Text('No expenses added yet.'))
+                      : ListView.builder(
+                          itemCount: expenses.length,
+                          itemBuilder: (context, index) {
+                            final exp = expenses[index];
+                            return Card(
+                              elevation: 3,
+                              child: ListTile(
+                                title: Text(exp['type']),
+                                subtitle: Text(exp['note'] ?? ''),
+                                trailing: Text(
+                                  '₹${(exp['amount'] as num).toStringAsFixed(2)}',
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                ),
+              ],
+            ),
+    ),
+  );
+}
 
   
 }

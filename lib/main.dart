@@ -15,9 +15,12 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+final Color darkblue = Color(0xff03045e);
+
 void main() async {
   await dotenv.load(fileName: ".env");
-  await Supabase.initialize(url: '${dotenv.env["URL"]}', anonKey: '${dotenv.env["ANONKEY"]}');
+  await Supabase.initialize(
+      url: '${dotenv.env["URL"]}', anonKey: '${dotenv.env["ANONKEY"]}');
   // anonKey:
   //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6c3dlb2xycG1md2RqcXZ0bm5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg4MjkwODksImV4cCI6MjA1NDQwNTA4OX0.FmLD4bx5KCCEDIxBFBbqxOBiUT3KwOHcIT2iOwhvGgU');
   runApp(const MyApp());
