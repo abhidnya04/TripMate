@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart' show GoogleFonts;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../components/my_textfield.dart';
-import '../components/my_button.dart';
+//import '../components/my_button.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -80,15 +80,22 @@ class _RegisterPageState extends State<RegisterPage> {
               padding: EdgeInsets.only(
                 left: 16, 
                 right: 16, 
-                top: 16, 
+                top: 12, 
                 bottom: MediaQuery.of(context).viewInsets.bottom
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 50),
-                   Text('TripMate', style: GoogleFonts.pattaya(fontSize: 40, fontWeight: FontWeight.w500, color: Color(0xff03045e),
-                  ),),
+                  //const SizedBox(height: 10),
+
+                  Image.asset(
+                    'lib/images/logo.png', 
+                    height: 200,
+                    width: 200,
+                  ),
+
+                  //  Text('TripMate', style: GoogleFonts.pattaya(fontSize: 40, fontWeight: FontWeight.w500, color: Color(0xff03045e),
+                  // ),),
                   const SizedBox(height: 20),
                   Text(
                     'Create an account',
