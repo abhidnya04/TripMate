@@ -1,4 +1,4 @@
-//import 'package:appdev/components/logoutalert.dart';
+import 'package:appdev/components/logoutalert.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -122,7 +122,7 @@ class _TripState extends State<Trip> {
         // ),
         // leading: Drawer(),
       ),
-      drawer: Drawer(),
+      drawer: customdrawer(),
   //     body: Stack(
   //       // fit: ,
   //       children: [
