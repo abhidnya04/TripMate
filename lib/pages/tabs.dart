@@ -1,6 +1,7 @@
 import 'package:appdev/components/logoutalert.dart';
 import 'package:appdev/pages/create_trip.dart';
 import 'package:appdev/pages/documents.dart';
+import 'package:appdev/pages/offline.dart';
 import 'package:appdev/pages/translate.dart';
 import 'package:appdev/pages/your_trips.dart';
 // import 'package:appdev/pages/upload_docs.dart';
@@ -187,8 +188,6 @@ class _TabsScreenState extends State<TabsScreen> {
   }
 }
 
-
-
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
 
@@ -206,7 +205,7 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: FutureBuilder<Map<String, dynamic>?> (
+      child: FutureBuilder<Map<String, dynamic>?>(
         future: _fetchUserProfile(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -214,28 +213,77 @@ class CustomDrawer extends StatelessWidget {
           }
 
           final profile = snapshot.data;
-          final username = profile?['username'] ?? 'User';
+          final username = profile?['Display name'] ?? 'User';
+          // final username = profile?['Display name'] ?? 'User';
+          // final username = Supabase.instance.client.auth.currentUser? ?? '';
+
           final email = Supabase.instance.client.auth.currentUser?.email ?? '';
 
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              UserAccountsDrawerHeader(
-                accountName: Text(username),
-                accountEmail: Text(email),
-                currentAccountPicture: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child: Text(
-                    username.isNotEmpty ? username[0].toUpperCase() : '?',
-                    style: TextStyle(fontSize: 30.0, color: Colors.blue),
-                  ),
+              // UserAccountsDrawerHeader(
+              //   accountName: Text(username,style: TextStyle(color: Colors.black)),
+              //   accountEmail: Text(email, style: TextStyle(color: Colors.black),),
+              //   currentAccountPicture: CircleAvatar(
+              //     backgroundColor: Colors.white,
+              //     child: Text(
+              //       username.isNotEmpty ? username[0].toUpperCase() : '?',
+              //       style: TextStyle(fontSize: 30.0, color: Colors.blue),
+              //     ),
+              //   ),
+              //   decoration: BoxDecoration(color: Color(0xffcaf0f8)),
+              // ),
+              Container(
+                width: double.infinity,
+                color: Color(0xffccdbfd),
+                padding: const EdgeInsets.symmetric(vertical: 40),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    CircleAvatar(
+                      radius: 35,
+                      backgroundColor: Colors.white,
+                      // child: Text(
+                      //   username.isNotEmpty ? username[0].toUpperCase() : '?',
+                      //   style: const TextStyle(fontSize: 30.0, color: Colors.blue),
+                      // ),
+                      child: Image.asset('assets/traveller.png'),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      username,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    // const SizedBox(height: 5),
+                    Text(
+                      email,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
                 ),
-                decoration: BoxDecoration(color: Color(0xffcaf0f8)),
               ),
+
               ListTile(
                 leading: Icon(Icons.download),
                 title: Text('View Downloads'),
                 onTap: () {
                   Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => LocalTripsPage()));
                 },
               ),
               ListTile(
@@ -249,10 +297,14 @@ class CustomDrawer extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.logout),
                 title: Text('Logout'),
-                onTap: () async {
-                  await Supabase.instance.client.auth.signOut();
+                onTap: () {
+                  // await Supabase.instance.client.auth.signOut();
                   Navigator.pop(context);
                   // Optionally navigate to login screen
+                  showDialog(
+                      context: context,
+                      builder: (context) => logotalert(),
+                    );
                 },
               ),
             ],
@@ -263,56 +315,56 @@ class CustomDrawer extends StatelessWidget {
   }
 }
 
+// class customdrawer extends StatelessWidget {
+//   const customdrawer({
+//     super.key,
+//   });
 
-class customdrawer extends StatelessWidget {
-  const customdrawer({
-    super.key,
-  });
+//   @override
+//   Widget build(BuildContext context) {
+//     return Drawer(
+//       child: Column(
+//         children: [
+//           DrawerHeader(
+//             decoration: BoxDecoration(
+//               color: Color(0xffcaf0f8),
+//             ),
+//             child: Align(
+//               alignment: Alignment.bottomLeft,
+//               child: Text(
+//                 '👋 Hello, User!',
+//                 style: TextStyle(color: Colors.white, fontSize: 20),
+//               ),
+//             ),
+//           ),
+//           ListTile(
+//             leading: Icon(Icons.download),
+//             title: Text('View Downloads'),
+//             onTap: () {
+//               Navigator.pop(context);
+//               // Navigator.pushNamed(context, '/downloads');
 
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: Column(
-        children: [
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: Color(0xffcaf0f8),
-            ),
-            child: Align(
-              alignment: Alignment.bottomLeft,
-              child: Text(
-                '👋 Hello, User!',
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-            ),
-          ),
-          ListTile(
-            leading: Icon(Icons.download),
-            title: Text('View Downloads'),
-            onTap: () {
-              Navigator.pop(context);
-              // Navigator.pushNamed(context, '/downloads');
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
-            onTap: () {
-              Navigator.pop(context);
-              // Navigator.pushNamed(context, '/settings');
-            },
-          ),
-          Spacer(),
-          ListTile(
-            leading: Icon(Icons.logout),
-            title: Text('Logout'),
-            onTap: () {
-              // Add your logout logic here
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
+//             },
+//           ),
+//           ListTile(
+//             leading: Icon(Icons.settings),
+//             title: Text('Settings'),
+//             onTap: () {
+//               Navigator.pop(context);
+//               // Navigator.pushNamed(context, '/settings');
+//             },
+//           ),
+//           Spacer(),
+//           ListTile(
+//             leading: Icon(Icons.logout),
+//             title: Text('Logout'),
+//             onTap: () {
+//               // Add your logout logic here
+//               Navigator.pop(context);
+//             },
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

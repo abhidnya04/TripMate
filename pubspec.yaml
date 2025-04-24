@@ -120,6 +120,7 @@ flutter:
     - assets/couplet.png
     - assets/frand.png
     - assets/famil.png
+    - assets/traveller.png
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see

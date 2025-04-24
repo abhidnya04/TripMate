@@ -122,7 +122,7 @@ class _TripState extends State<Trip> {
         // ),
         // leading: Drawer(),
       ),
-      drawer: customdrawer(),
+      drawer: CustomDrawer(),
   //     body: Stack(
   //       // fit: ,
   //       children: [
