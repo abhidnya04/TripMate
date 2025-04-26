@@ -44,12 +44,15 @@ dependencies:
   pdf: ^3.10.8
   path_provider: ^2.1.2
   google_sign_in: ^6.3.0
+  path_provider: ^2.1.5
+  open_file: ^3.3.2
   intl: ^0.20.2
   flutter_typeahead: ^5.2.0
-
   open_file: ^3.3.2
   url_launcher: ^6.3.1
   google_fonts: ^6.2.1
+  flutter_dotenv: ^5.2.1
+  share_plus: ^10.1.4
 
 dev_dependencies:
   flutter_test:
@@ -110,6 +113,7 @@ flutter:
     - lib/images/low.png
     - lib/images/med.png
     - lib/images/high.png
+    - lib/images/logo.png
     - assets/bus_loading.gif
     - assets/low_budget.png
     - assets/med_budget.png
@@ -118,6 +122,8 @@ flutter:
     - assets/couplet.png
     - assets/frand.png
     - assets/famil.png
+    - assets/traveller.png
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

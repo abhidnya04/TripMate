@@ -1,11 +1,14 @@
+import 'package:appdev/components/logoutalert.dart';
 import 'package:appdev/pages/create_trip.dart';
 import 'package:appdev/pages/documents.dart';
+import 'package:appdev/pages/offline.dart';
 import 'package:appdev/pages/translate.dart';
 import 'package:appdev/pages/your_trips.dart';
  import 'package:appdev/components/logoutalert.dart';
 import 'package:appdev/trip.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 // class TabsScreen extends StatefulWidget {
 //   static final GlobalKey<_TabsScreenState> tabsKey = GlobalKey<_TabsScreenState>();
@@ -77,7 +80,6 @@ import 'package:google_fonts/google_fonts.dart';
 //   }
 // }
 
-
 class TabsScreen extends StatefulWidget {
   final int initialIndex;
 
@@ -100,6 +102,18 @@ class _TabsScreenState extends State<TabsScreen> {
     setState(() {
       _selectedPageIndex = index;
     });
+  }
+
+  final supabase = Supabase.instance.client;
+
+  Future<Map<String, dynamic>?> _fetchUserProfile() async {
+    final user = supabase.auth.currentUser;
+    if (user == null) return null;
+
+    final response =
+        await supabase.from('profiles').select().eq('id', user.id).single();
+
+    return response;
   }
 
   @override
@@ -144,7 +158,7 @@ class _TabsScreenState extends State<TabsScreen> {
       // leading: Drawer(),
       
     ),
-    drawer: Drawer(),
+    drawer: CustomDrawer(),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
         selectedIconTheme: IconThemeData(color: Color(0xff03045e)),
@@ -159,12 +173,195 @@ class _TabsScreenState extends State<TabsScreen> {
         currentIndex: _selectedPageIndex,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
-          BottomNavigationBarItem(icon: Icon(Icons.translate_outlined), label: 'Translate'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.translate_outlined), label: 'Translate'),
           BottomNavigationBarItem(icon: Icon(Icons.create), label: 'New Trip'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: 'Your trips'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_bag), label: 'Your trips'),
           BottomNavigationBarItem(icon: Icon(Icons.upload), label: 'DocVault'),
         ],
       ),
     );
   }
 }
+
+class CustomDrawer extends StatelessWidget {
+  const CustomDrawer({super.key});
+
+  Future<Map<String, dynamic>?> _fetchUserProfile() async {
+    final supabase = Supabase.instance.client;
+    final user = supabase.auth.currentUser;
+    if (user == null) return null;
+
+    final response =
+        await supabase.from('profiles').select().eq('id', user.id).single();
+
+    return response;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: FutureBuilder<Map<String, dynamic>?>(
+        future: _fetchUserProfile(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          final profile = snapshot.data;
+          final username = profile?['Display name'] ?? 'User';
+          // final username = profile?['Display name'] ?? 'User';
+          // final username = Supabase.instance.client.auth.currentUser? ?? '';
+
+          final email = Supabase.instance.client.auth.currentUser?.email ?? '';
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // UserAccountsDrawerHeader(
+              //   accountName: Text(username,style: TextStyle(color: Colors.black)),
+              //   accountEmail: Text(email, style: TextStyle(color: Colors.black),),
+              //   currentAccountPicture: CircleAvatar(
+              //     backgroundColor: Colors.white,
+              //     child: Text(
+              //       username.isNotEmpty ? username[0].toUpperCase() : '?',
+              //       style: TextStyle(fontSize: 30.0, color: Colors.blue),
+              //     ),
+              //   ),
+              //   decoration: BoxDecoration(color: Color(0xffcaf0f8)),
+              // ),
+              Container(
+                width: double.infinity,
+                color: Color(0xffccdbfd),
+                padding: const EdgeInsets.symmetric(vertical: 40),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    CircleAvatar(
+                      radius: 35,
+                      backgroundColor: Colors.white,
+                      // child: Text(
+                      //   username.isNotEmpty ? username[0].toUpperCase() : '?',
+                      //   style: const TextStyle(fontSize: 30.0, color: Colors.blue),
+                      // ),
+                      child: Image.asset('assets/traveller.png'),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      username,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    // const SizedBox(height: 5),
+                    Text(
+                      email,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              ListTile(
+                leading: Icon(Icons.download),
+                title: Text('View Downloads'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => LocalTripsPage()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text('Settings'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              Spacer(),
+              ListTile(
+                leading: Icon(Icons.logout),
+                title: Text('Logout'),
+                onTap: () {
+                  // await Supabase.instance.client.auth.signOut();
+                  Navigator.pop(context);
+                  // Optionally navigate to login screen
+                  showDialog(
+                      context: context,
+                      builder: (context) => logotalert(),
+                    );
+                },
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+// class customdrawer extends StatelessWidget {
+//   const customdrawer({
+//     super.key,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Drawer(
+//       child: Column(
+//         children: [
+//           DrawerHeader(
+//             decoration: BoxDecoration(
+//               color: Color(0xffcaf0f8),
+//             ),
+//             child: Align(
+//               alignment: Alignment.bottomLeft,
+//               child: Text(
+//                 '👋 Hello, User!',
+//                 style: TextStyle(color: Colors.white, fontSize: 20),
+//               ),
+//             ),
+//           ),
+//           ListTile(
+//             leading: Icon(Icons.download),
+//             title: Text('View Downloads'),
+//             onTap: () {
+//               Navigator.pop(context);
+//               // Navigator.pushNamed(context, '/downloads');
+
+//             },
+//           ),
+//           ListTile(
+//             leading: Icon(Icons.settings),
+//             title: Text('Settings'),
+//             onTap: () {
+//               Navigator.pop(context);
+//               // Navigator.pushNamed(context, '/settings');
+//             },
+//           ),
+//           Spacer(),
+//           ListTile(
+//             leading: Icon(Icons.logout),
+//             title: Text('Logout'),
+//             onTap: () {
+//               // Add your logout logic here
+//               Navigator.pop(context);
+//             },
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

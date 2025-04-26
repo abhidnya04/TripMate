@@ -1,12 +1,13 @@
 import 'package:appdev/components/logoutalert.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
 import 'components/articles_widget.dart';
 import 'components/saved_thumbnails.dart';
 import 'models/articles.dart';
 import 'models/saved.dart';
 import 'pages/tabs.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 // import 'saved_itineraries.dart';
 
@@ -89,107 +90,170 @@ class _TripState extends State<Trip> {
 //     );
 //   }
 
-
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    // appBar: AppBar(
-    //   iconTheme: const IconThemeData(size: 30),
-    //   actions: [
-    //     GestureDetector(
-    //       onTap: () {
-    //         showDialog(
-    //           context: context,
-    //           builder: (context) => logotalert(),
-    //         );
-    //       },
-    //       child: Icon(Icons.person_4),
-    //     )
-    //   ],
-    //   centerTitle: true,
-    //   title:  Text("TripMate", style: GoogleFonts.pattaya(fontWeight: FontWeight.w500, fontSize: 32)),
-    //   // leading: GestureDetector(
-    //   //   onTap: () {
-    //   //     showDialog(
-    //   //       context: context,
-    //   //       builder: (context) => logotalert(),
-    //   //     );
-    //   //   },
-    //   //   child: const Icon(Icons.view_sidebar_outlined),
-    //   // ),
-    //   // leading: Drawer(),
-      
-    // ),
-    // drawer: Drawer(),
-    body: Stack(
-      children: [
-        // Background Greeting Section
-        GreetContainer(),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
         
+        iconTheme: const IconThemeData(size: 30),
+        actions: [
+          GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) => logotalert(),
+              );
+            },
+            child: Icon(Icons.person_4),
+          )
+        ],
+        centerTitle: true,
+        title: Text("TripMate",
+            style:
+                GoogleFonts.pattaya(fontWeight: FontWeight.w500, fontSize: 32)),
+        // leading: GestureDetector(
+        //   onTap: () {
+        //     showDialog(
+        //       context: context,
+        //       builder: (context) => logotalert(),
+        //     );
+        //   },
+        //   child: const Icon(Icons.view_sidebar_outlined),
+        // ),
+        // leading: Drawer(),
+      ),
+      drawer: CustomDrawer(),
+  //     body: Stack(
+  //       // fit: ,
+  //       children: [
+  //         // Background Greeting Section
+  //         GreetContainer(),
 
-        // Foreground Card Section
-        Positioned(
-          top: MediaQuery.of(context).size.height * 0.23, // Adjust for overlap
-          left: 0.001,
-          right: 0.001,
-          child: Card(
-            
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
-            elevation: 8, // Adds shadow for depth
-            child: Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 16,),
-SavedItineraries(categories: categories),
+  //         // Foreground Card Section
+  //         Positioned(
+  //           top:
+  //               MediaQuery.of(context).size.height * 0.23, // Adjust for overlap
+  //           left: 0.001,
+  //           right: 0.001,
+  //           child: Card(
+  //             shape: RoundedRectangleBorder(
+  //               borderRadius: BorderRadius.circular(30),
+  //             ),
+  //             elevation: 8, // Adds shadow for depth
+  //             child: Padding(
+  //               padding: const EdgeInsets.all(0.0),
+  //               child: Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: [
+  //                   SizedBox(
+  //                     height: 16,
+  //                   ),
+  //                   SavedItineraries(categories: categories),
+  //                   const Padding(
+  //                     padding: EdgeInsets.only(left: 20.0),
+  //                     child: Text(
+  //                       "Travel Stories",
+  //                       style: TextStyle(
+  //                         fontSize: 18,
+  //                         color: Colors.black,
+  //                         fontWeight: FontWeight.w600,
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   const Padding(
+  //                     padding: EdgeInsets.only(left: 20.0),
+  //                     child: Text(
+  //                       "Top stories from around the world!",
+  //                       style: TextStyle(
+  //                         fontSize: 16,
+  //                         color: Colors.black,
+  //                         fontWeight: FontWeight.w300,
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   ArticlesWidget(articles: articles),
+  //                 ],
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
 
-                  const Padding(
-                    padding:  EdgeInsets.only( left: 20.0),
-                    child:  Text(
-                      "Travel Stories",
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600,
+  body: CustomScrollView(
+      slivers: [
+        SliverAppBar(
+            automaticallyImplyLeading: false,
+          backgroundColor: Colors.transparent,
+          expandedHeight: 200.0,
+          pinned: false,
+          floating: false,
+
+          flexibleSpace: FlexibleSpaceBar(
+            background: GreetContainer(), // 👈 Your greeting
+          ),
+        ),
+
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 0.0),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              elevation: 8,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SavedItineraries(categories: categories),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 20.0),
+                      child: Text(
+                        "Travel Stories",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
-                  ),
-                  const Padding(
-                    padding:  EdgeInsets.only( left: 20.0),
-                    child: Text(
-                    "Top stories from around the world!",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w300,
+                    const Padding(
+                      padding: EdgeInsets.only(left: 20.0),
+                      child: Text(
+                        "Top stories from around the world!",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
                     ),
-                  ),),
-                  ArticlesWidget(articles: articles),
-                ],
+                    ArticlesWidget(articles: articles),
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ],
     ),
-  );
-}
-
+    );
+  }
 
   Padding GreetContainer() {
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.99,
+        width: MediaQuery.of(context).size.width * 1,
         decoration: BoxDecoration(
             // borderRadius: BorderRadius.circular(10),
             gradient: LinearGradient(colors: [
-              Color(0xffccdbfd),
-              Color(0xffcaf0f8),
-            ])),
+          Color(0xffccdbfd),
+          Color(0xffcaf0f8),
+        ])),
         child: Column(
           children: [
             SizedBox(
@@ -197,7 +261,8 @@ SavedItineraries(categories: categories),
             ),
             Text(
               'Hello Voyager 👋',
-              style: GoogleFonts.roboto(fontSize: 32, fontWeight: FontWeight.w500),
+              style:
+                  GoogleFonts.roboto(fontSize: 32, fontWeight: FontWeight.w500),
             ),
             SizedBox(
               height: 10,
@@ -211,10 +276,11 @@ SavedItineraries(categories: categories),
             ),
             ElevatedButton(
                 onPressed: () {
-Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(builder: (context) => TabsScreen(initialIndex: 2)),
-  );
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TabsScreen(initialIndex: 2)),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xffccdbfd),

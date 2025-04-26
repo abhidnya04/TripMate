@@ -12,14 +12,18 @@ import 'package:appdev/savedIineraries/goa.dart';
 import 'package:appdev/savedIineraries/kolkata.dart';
 import 'package:appdev/savedIineraries/shimla.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+final Color darkblue = Color(0xff03045e);
+
 void main() async {
+  await dotenv.load(fileName: ".env");
   await Supabase.initialize(
-        url: 'https://dzsweolrpmfwdjqvtnni.supabase.co',
-        anonKey:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6c3dlb2xycG1md2RqcXZ0bm5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg4MjkwODksImV4cCI6MjA1NDQwNTA4OX0.FmLD4bx5KCCEDIxBFBbqxOBiUT3KwOHcIT2iOwhvGgU');
+      url: '${dotenv.env["URL"]}', anonKey: '${dotenv.env["ANONKEY"]}');
+  // anonKey:
+  //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6c3dlb2xycG1md2RqcXZ0bm5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg4MjkwODksImV4cCI6MjA1NDQwNTA4OX0.FmLD4bx5KCCEDIxBFBbqxOBiUT3KwOHcIT2iOwhvGgU');
   runApp(const MyApp());
 }
 
@@ -32,22 +36,21 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
-@override
-void initState() {
-    super.initState();
+  @override
+  void initState() {
+      super.initState();
     // Ensuring deep link configuration happens only once after the widget tree is built
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(Duration.zero, () {
-        if (mounted) {
-          configureDeepLink(context);
-        }
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Future.delayed(Duration.zero, () {
+          if (mounted) {
+            configureDeepLink(context);
+          }
+        });
       });
-    });
-  }
+    }
 
   @override
   Widget build(BuildContext context) {
-    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -71,21 +74,19 @@ void initState() {
         )
       ),
       initialRoute: '/login',
-        routes: {
-        '/tabs': (context) =>   TabsScreen(),
-        '/login': (context) =>   LoginPage(),
-        '/signup': (context) =>  RegisterPage(),
-        '/uploadDocs': (context) =>  UploadPage(),
-        '/createtrip': (context) =>  CreateTrip(),
-        '/myDocs': (context) =>  MyDocuments(),
-        '/delhi': (context) =>  DelhiItinerary(),
-        '/goa': (context) =>  GoaItinerary(),
-        '/kolkata': (context) =>  KolkataItinerary(),
-        '/shimla': (context) =>  ShimlaItinerary(),
-        '/updatepasswordpage': (context) =>  UpdatePasswordPage()
-
+      routes: {
+        '/tabs': (context) => TabsScreen(),
+        '/login': (context) => LoginPage(),
+        '/signup': (context) => RegisterPage(),
+        '/uploadDocs': (context) => UploadPage(),
+        '/createtrip': (context) => CreateTrip(),
+        '/myDocs': (context) => MyDocuments(),
+        '/delhi': (context) => DelhiItinerary(),
+        '/goa': (context) => GoaItinerary(),
+        '/kolkata': (context) => KolkataItinerary(),
+        '/shimla': (context) => ShimlaItinerary(),
+        '/updatepasswordpage': (context) => UpdatePasswordPage()
       },
     );
   }
 }
-

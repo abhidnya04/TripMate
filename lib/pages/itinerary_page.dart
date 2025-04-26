@@ -10,7 +10,7 @@
 
 
 
-
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:io';
 import 'package:appdev/flight_booking_screen.dart';
 import 'package:appdev/itinerary_model.dart';
@@ -22,8 +22,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ItineraryPage extends StatefulWidget {
   final String itinerary;
+  final String userTitle;
 
-  const ItineraryPage({super.key, required this.itinerary});
+  const ItineraryPage({super.key, required this.itinerary,  required this.userTitle,});
 
   @override
   _ItineraryPageState createState() => _ItineraryPageState();
@@ -109,6 +110,37 @@ class _ItineraryPageState extends State<ItineraryPage> {
     }
   }
 
+
+  Future<void> _saveToSupabase(String jsonString, String tripTitle) async {
+  final userId = Supabase.instance.client.auth.currentUser?.id;
+
+  if (userId == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("User not logged in.")),
+    );
+    return;
+  }
+
+  try {
+    final response = await Supabase.instance.client.from('itineraries').insert({
+      'user_id': userId,
+      'title': tripTitle,
+      'json_data': jsonString,  // Store entire JSON string
+      'created_at': DateTime.now().toIso8601String(),
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Itinerary saved to cloud!")),
+    );
+  } catch (e) {
+    debugPrint("Error saving to Supabase: $e");
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Failed to save to Supabase.")),
+    );
+  }
+}
+
+
   @override
   Widget build(BuildContext context) {
     final Itinerary itineraryData = Itinerary.fromJson(widget.itinerary);
@@ -189,8 +221,12 @@ class _ItineraryPageState extends State<ItineraryPage> {
               )),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () => _generatePdf(context, itineraryData),
-            child: const Text("Download Itinerary"),
+            // onPressed: () => _generatePdf(context, itineraryData),
+            onPressed: () async {
+    // await _generatePdf(context, itineraryData);  // Local PDF generation
+    await _saveToSupabase(widget.itinerary, widget.userTitle);  // Supabase save
+  },
+            child: const Text("Save Itinerary"),
           ),
 
           const SizedBox(height: 40),

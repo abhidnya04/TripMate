@@ -1,14 +1,14 @@
 import 'package:appdev/components/deeplink.dart';
 import 'package:appdev/components/forgetpassdialog.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+//import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../components/my_button.dart';
+//import '../components/my_button.dart';
 import '../components/my_textfield.dart';
 import '../components/square_tile.dart';
-import 'register.dart';
+//import 'register.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -177,17 +177,17 @@ Future<void> checkUserSession() async {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 150),
+                //const SizedBox(height: 5),
 
-                  // Logo
-                  // Image.asset(
-                  //   'lib/images/TravelLuggage.png', 
-                  //   height: 130,
-                  //   width: 130,
-                  // ),
-                  Text('TripMate', style: GoogleFonts.pattaya(fontSize: 40, fontWeight: FontWeight.w500, color: Color(0xff03045e),
-                  ),),
-                  const SizedBox(height: 20),
+                 // Logo
+                  Image.asset(
+                    'lib/images/logo.png', 
+                    height: 200,
+                    width: 200,
+                  ),
+                  // Text('TripMate', style: GoogleFonts.pattaya(fontSize: 40, fontWeight: FontWeight.w500, color: Color(0xff03045e),
+                  // ),),
+                  const SizedBox(height: 6),
 
                   // Welcome text
                   Text(
@@ -295,7 +295,7 @@ Future<void> checkUserSession() async {
                         ),
                   ),
 
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
 
                   // Divider
                   Row(
@@ -308,6 +308,7 @@ Future<void> checkUserSession() async {
                       Expanded(child: Divider(thickness: 0.5, color: Color(0xff03045e))),
                     ],
                   ),
+
                   const SizedBox(height: 40),
 
 
