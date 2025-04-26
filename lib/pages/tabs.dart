@@ -2,7 +2,7 @@ import 'package:appdev/pages/create_trip.dart';
 import 'package:appdev/pages/documents.dart';
 import 'package:appdev/pages/translate.dart';
 import 'package:appdev/pages/your_trips.dart';
-// import 'package:appdev/pages/upload_docs.dart';
+ import 'package:appdev/components/logoutalert.dart';
 import 'package:appdev/trip.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -122,10 +122,10 @@ class _TabsScreenState extends State<TabsScreen> {
       actions: [
         GestureDetector(
           onTap: () {
-            // showDialog(
-            //   context: context,
-            //   builder: (context) => logotalert(),
-            // );
+            showDialog(
+              context: context,
+              builder: (context) => logotalert(),
+            );
           },
           child: Icon(Icons.person_4),
         )

@@ -1,3 +1,4 @@
+import 'package:appdev/components/deeplink.dart';
 import 'package:appdev/components/forgetpassdialog.dart';
 import 'package:appdev/pages/create_trip.dart';
 import 'package:appdev/pages/documents.dart';
@@ -33,16 +34,16 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
 @override
 void initState() {
-  super.initState();
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    Future.delayed(Duration.zero, () {
-      if (mounted) {
-        configureDeepLink(context);
-      }
+    super.initState();
+    // Ensuring deep link configuration happens only once after the widget tree is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(Duration.zero, () {
+        if (mounted) {
+          configureDeepLink(context);
+        }
+      });
     });
-  });
-  
-}
+  }
 
   @override
   Widget build(BuildContext context) {

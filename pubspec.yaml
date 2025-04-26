@@ -43,14 +43,11 @@ dependencies:
   app_links: ^6.4.0
   pdf: ^3.10.8
   path_provider: ^2.1.2
-  open_file: ^3.3.2
-<<<<<<< HEAD
   google_sign_in: ^6.3.0
-=======
   intl: ^0.20.2
   flutter_typeahead: ^5.2.0
->>>>>>> 68d29fa409b65722d907e543fd75780c981d63f4
-  
+
+  open_file: ^3.3.2
   url_launcher: ^6.3.1
   google_fonts: ^6.2.1
 

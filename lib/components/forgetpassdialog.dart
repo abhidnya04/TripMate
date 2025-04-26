@@ -66,7 +66,7 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
         ElevatedButton(
           onPressed: (){
             Navigator.pop(context);
-            resetPassword;
+            resetPassword();
           },
           child: const Text("Send Reset Link"),
           // style: ,
@@ -76,18 +76,20 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
   }
 }
 
-void configureDeepLink(BuildContext context) {
-  final appLinks = AppLinks();
+// void configureDeepLink(BuildContext context) {
+//   final appLinks = AppLinks();
 
-  appLinks.uriLinkStream.listen((uri) {
-    if (uri != null && uri.host == 'reset-password') {
-        Navigator.of(context).pushNamedAndRemoveUntil('/updatepasswordpage', (route) => false);
-    }
-    if (uri != null && uri.host == 'login-callback') {
-        Navigator.of(context).pushNamedAndRemoveUntil('/tabs', (route) => false);
-    }
-  }, onError: (err) {
-    debugPrint("Deep Link Error: $err");
-  });
-}
+//   appLinks.uriLinkStream.listen((uri) {
+//     debugPrint("Received URI: $uri");
+
+//     if (uri != null && uri.host == 'reset-password') {
+//         Navigator.of(context).pushNamedAndRemoveUntil('/updatepasswordpage', (route) => false);
+//     }
+//     if (uri != null && uri.host == 'login-callback') {
+//         Navigator.of(context).pushNamedAndRemoveUntil('/tabs', (route) => false);
+//     }
+//   }, onError: (err) {
+//     debugPrint("Deep Link Error: $err");
+//   });
+// }
 
