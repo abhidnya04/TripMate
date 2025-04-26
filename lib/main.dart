@@ -1,3 +1,4 @@
+import 'package:appdev/components/deeplink.dart';
 import 'package:appdev/components/forgetpassdialog.dart';
 import 'package:appdev/pages/create_trip.dart';
 import 'package:appdev/pages/documents.dart';
@@ -37,15 +38,16 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(Duration.zero, () {
-        if (mounted) {
-          configureDeepLink(context);
-        }
+      super.initState();
+    // Ensuring deep link configuration happens only once after the widget tree is built
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Future.delayed(Duration.zero, () {
+          if (mounted) {
+            configureDeepLink(context);
+          }
+        });
       });
-    });
-  }
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -53,24 +55,24 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(255, 255, 255, 255)),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xff03045e),
-                  foregroundColor: Colors.white)),
-          useMaterial3: true,
-          primarySwatch: Colors.blue,
-          textTheme: GoogleFonts.robotoTextTheme(),
-          scaffoldBackgroundColor: Color(0xffedf2fb), // background color
-          appBarTheme: AppBarTheme(
-              titleTextStyle: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: Color(0xff03045e),
-                  fontSize: 32),
-              foregroundColor: Color(0xff03045e),
-              // titleTextStyle: TextStyle(fontWeight: FontWeight.w500),
-              backgroundColor: Color(0xffedf2fb))),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 255, 255, 255)),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color(0xff03045e),
+            foregroundColor: Colors.white
+          )
+        ),
+        useMaterial3: true,
+        primarySwatch: Colors.blue,
+        textTheme: GoogleFonts.robotoTextTheme(),
+        scaffoldBackgroundColor: Color(0xffedf2fb), // background color 
+        appBarTheme: AppBarTheme(
+          titleTextStyle: TextStyle(fontWeight: FontWeight.w500 , color: Color(0xff03045e) , fontSize: 32),
+          foregroundColor:  Color(0xff03045e),
+          // titleTextStyle: TextStyle(fontWeight: FontWeight.w500),
+          backgroundColor: Color(0xffedf2fb)
+        )
+      ),
       initialRoute: '/login',
       routes: {
         '/tabs': (context) => TabsScreen(),

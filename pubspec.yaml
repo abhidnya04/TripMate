@@ -42,11 +42,13 @@ dependencies:
   google_generative_ai: ^0.4.6
   app_links: ^6.4.0
   pdf: ^3.10.8
+  path_provider: ^2.1.2
+  google_sign_in: ^6.3.0
   path_provider: ^2.1.5
   open_file: ^3.3.2
   intl: ^0.20.2
   flutter_typeahead: ^5.2.0
-  
+  open_file: ^3.3.2
   url_launcher: ^6.3.1
   google_fonts: ^6.2.1
   flutter_dotenv: ^5.2.1
