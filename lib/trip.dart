@@ -93,35 +93,35 @@ class _TripState extends State<Trip> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      // appBar: AppBar(
         
-        iconTheme: const IconThemeData(size: 30),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (context) => logotalert(),
-              );
-            },
-            child: Icon(Icons.person_4),
-          )
-        ],
-        centerTitle: true,
-        title: Text("TripMate",
-            style:
-                GoogleFonts.pattaya(fontWeight: FontWeight.w500, fontSize: 32)),
-        // leading: GestureDetector(
-        //   onTap: () {
-        //     showDialog(
-        //       context: context,
-        //       builder: (context) => logotalert(),
-        //     );
-        //   },
-        //   child: const Icon(Icons.view_sidebar_outlined),
-        // ),
-        // leading: Drawer(),
-      ),
+      //   iconTheme: const IconThemeData(size: 30),
+      //   actions: [
+      //     GestureDetector(
+      //       onTap: () {
+      //         showDialog(
+      //           context: context,
+      //           builder: (context) => logotalert(),
+      //         );
+      //       },
+      //       child: Icon(Icons.person_4),
+      //     )
+      //   ],
+      //   centerTitle: true,
+      //   title: Text("TripMate",
+      //       style:
+      //           GoogleFonts.pattaya(fontWeight: FontWeight.w500, fontSize: 32)),
+      //   // leading: GestureDetector(
+      //   //   onTap: () {
+      //   //     showDialog(
+      //   //       context: context,
+      //   //       builder: (context) => logotalert(),
+      //   //     );
+      //   //   },
+      //   //   child: const Icon(Icons.view_sidebar_outlined),
+      //   // ),
+      //   // leading: Drawer(),
+      // ),
       drawer: CustomDrawer(),
   //     body: Stack(
   //       // fit: ,
