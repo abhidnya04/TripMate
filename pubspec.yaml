@@ -42,7 +42,6 @@ dependencies:
   google_generative_ai: ^0.4.6
   app_links: ^6.4.0
   pdf: ^3.10.8
-  path_provider: ^2.1.2
   google_sign_in: ^6.3.0
   open_file: ^3.3.2
   intl: ^0.20.2
@@ -53,6 +52,7 @@ dependencies:
   share_plus: ^10.1.4
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.13.1
   flutter_test:
     sdk: flutter
 
@@ -65,7 +65,10 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "lib/images/appicon.png"
 # The following section is specific to Flutter packages.
 flutter:
 
@@ -104,6 +107,7 @@ flutter:
     - assets/frnd.png
     - assets/solo.png
     - lib/images/google.png
+    - lib/images/appicon.png
     - lib/images/TravelLuggage.png
     - lib/images/travel.jpeg
     - lib/images/budget.png
