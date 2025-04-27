@@ -274,7 +274,7 @@ class CustomDrawer extends StatelessWidget {
 
               ListTile(
                 leading: Icon(Icons.download),
-                title: Text('View Downloads'),
+                title: Text('View Downloads',),
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.push(
@@ -283,17 +283,24 @@ class CustomDrawer extends StatelessWidget {
                           builder: (context) => LocalTripsPage()));
                 },
               ),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Settings'),
-                onTap: () {
+ListTile(
+  leading: Icon(Icons.book_rounded),
+  title: Text('Travel Blogs'),
+  onTap: () {
                   Navigator.pop(context);
-                },
-              ),
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Travel Blogs - To be implemented soon!'),
+      ),
+    );
+  },
+),
+
               Spacer(),
               ListTile(
-                leading: Icon(Icons.logout),
-                title: Text('Logout'),
+                leading: Icon(Icons.logout, color: Colors.red,),
+                title: Text('Logout' , style: TextStyle(color: Colors.red),),
                 onTap: () {
                   // await Supabase.instance.client.auth.signOut();
                   Navigator.pop(context);
