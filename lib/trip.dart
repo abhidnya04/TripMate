@@ -1,4 +1,4 @@
-//import 'package:appdev/components/logoutalert.dart';
+import 'package:appdev/components/logoutalert.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'components/articles_widget.dart';
